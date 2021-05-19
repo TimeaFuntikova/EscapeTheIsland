@@ -98,7 +98,6 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
     /**
      * (GeneratorLokalit) Vrati aktualnu lokalitu, v ktorej sa nachadza hrac.
      *
-     * @return
      */
     public Lokalita getAktualnaLokalita() {
         return this.aktualnaLokalita;
@@ -107,7 +106,6 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
     /**
      * (GeneratorLokalit) Arraylistpredmetov na vykreslenie.
      *
-     * @return
      */
     public HashMap<String, IPredmet> dajPredmetyNaVykreslenie() {
         return predmetyNaVykreslenie;
@@ -117,7 +115,6 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
      * (GeneratorLokalit)) Metóda, ktorá vloží do zoznamu všetky lokality, ktoré exstujú. Slúži na to, aby sa z neho dala metódou určiť
      * aktuálna lokalita.
      *
-     * @return ArrayList<Lokatita>vsetkyLokality
      */
     public void naplnZoznamLokalit() {
         this.vsetkyLokality.put(this.plaz.getNazovLokality(), this.plaz);
@@ -149,9 +146,7 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
     }
 
     /**
-     * (GeneratorLokalit) Nastavi aktualnu lokalitu.
-     *
-     * @param paNova
+     * (GeneratorLokalit) Nastavi aktualnu lokalitu
      */
     public Lokalita nastavAktualnuLokalitu(Lokalita paNova) {  // zaciatku sa zavola z hry, kde sa za začiatok bude povazovať pláž.
         this.aktualnaLokalita = paNova;
@@ -161,9 +156,6 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
 
     /**
      * (GeneratorLokalit) Nastaví lokalitam ich pozadia a vykresli ich.
-     *
-     * @param vykreslovacPozadiLokalit
-     * @param batch
      */
     public void vykresliPozadieLokality(VykreslovacPozadiLokalit vykreslovacPozadiLokalit, SpriteBatch batch) {
 
@@ -217,7 +209,7 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
         //ak je null tak na objekte by sa nemalo robiť nič.
     }
 
-    public void naplnovac() {
+    public void naplnovac() { //planovac
         if (predmetyNaVykreslenie != null) {
             if (this.aktualnaLokalita == this.plaz) {
                 mazacPredmetov();
@@ -229,11 +221,14 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
                 this.predmetyNaVykreslenie.put("DrevoLesne1", this.drevoLesne1);
                 this.predmetyNaVykreslenie.put("Patyk1", this.drevoLesne2);
             }
-            else if (aktualnaLokalita == this.les) {
+            /*
+            else if (aktualnaLokalita == this.lietadlo) {
                 mazacPredmetov();
                 this.predmetyNaVykreslenie.put("DrevoLesne1", this.drevoLesne1);
                 this.predmetyNaVykreslenie.put("Patyk1", this.drevoLesne2);
             }
+
+             */
         }
         System.out.println("Nie su tu ziadne predmety na vykreslenie. lokalita uz nema v sebe ziadne predmety. ");
     }
@@ -244,10 +239,6 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
 
     /**
      * (GeneratorLokalit) Zavolá si metódu na vykreslovanie predmetov z triedy GeneratorPredmetov.
-     *
-     * @param batch
-     * @param vykreslovacPredmetov
-     * @param generatorPredmetov
      */
     public void vykresliSa(SpriteBatch batch, VykreslovacPredmetov vykreslovacPredmetov, GeneratorPredmetov generatorPredmetov) {
         this.vykreslovac = vykreslovacPredmetov;
