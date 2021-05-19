@@ -1,0 +1,40 @@
+package ski.uniza.fri.vykreslovace;
+
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
+/**
+ * (Vykreslovac predmetov) Sluzi na zobrazenie objektov, ktorymi je mozne pocas hry manipulovat.
+ *
+ * @author Timea Funtíková
+ * @version 1.0 (12.4.2021)
+ *
+ */
+public class VykreslovacPredmetov extends ApplicationAdapter {
+    private Texture texture;
+
+    public VykreslovacPredmetov() {}
+
+    public Sprite getPlayerTexture() {
+        return new Sprite (new Sprite(this.texture = new Texture("postavaDEMO.png")));
+    }
+
+    public Sprite getKokosTexture() {
+        return new Sprite (new Sprite(this.texture = new Texture("kokos.png")));
+    }
+
+    public Sprite getDrevoTexture() {
+        return new Sprite (new Sprite(this.texture = new Texture("drevo.png")));
+    }
+
+    public Sprite getPatykTexture() {
+        return new Sprite (new Sprite(this.texture = new Texture("patyk.png")));
+    }
+
+
+    public void dispose() {
+        this.texture.dispose();
+    }
+
+}

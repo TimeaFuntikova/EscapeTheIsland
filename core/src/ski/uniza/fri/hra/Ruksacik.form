@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="ski.uniza.fri.hra.Ruksacik">
+  <grid id="27dc6" binding="panel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="11" y="20" width="509" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="c014f" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="1d5bc" class="javax.swing.JButton" binding="poskladajNovyButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="PoskladajNovy"/>
+            </properties>
+          </component>
+          <component id="74364" class="javax.swing.JButton" binding="zatvorRuksakButton" default-binding="true">
+            <constraints/>
+            <properties>
+              <text value="ZatvorRuksak"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="11046" class="javax.swing.JList" binding="zoznamPredmetovList">
+        <constraints border-constraint="Center"/>
+        <properties>
+          <background color="-12501226"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
