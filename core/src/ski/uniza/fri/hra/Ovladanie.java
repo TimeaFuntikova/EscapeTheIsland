@@ -6,8 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ski.uniza.fri.mapa.GeneratorLokalit;
 import ski.uniza.fri.mapa.Lokalita;
+import ski.uniza.fri.predmety.IPredmet;
 import ski.uniza.fri.vykreslovace.VykreslovacPozadiLokalit;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
+
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Trieda Ovladanie predstavuje v podstate zbierku príkazov, vďaka ktorým je možné hru a postavu ovládať.
@@ -63,7 +67,8 @@ public class Ovladanie implements IOvladanie {
     /**
      * (Ovladanie) Bezarametricky konstruktor triedy OvladaniePostavy.
      */
-    public Ovladanie() {}
+    public Ovladanie() {
+    }
 
     /**
      * (Ovladanie) Metódy na vykonavanie pohybu. -----------REFAKTORING KOLIZII a HITOV ____________________
@@ -73,7 +78,9 @@ public class Ovladanie implements IOvladanie {
         this.nastavPohnutieDole();
         this.nastavPohnutieDoprava();
         this.nastavPohnutieDolava();
+        this.kontrolaKolizii();
     }
+
 
     private void nastavPohnutieDolava() {
         if (!this.hybeSa && Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
@@ -109,24 +116,25 @@ public class Ovladanie implements IOvladanie {
             System.out.println("----------posun doprava sa vydaril.");
         }
     }
+
     //implementovane pohyby ale nie vykreslene
     private void nastavPohnutieDole() {
         if (!this.hybeSa && Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             this.sprites = this.vykreslovacPredmetov.getPlayerMovingDown();
             this.hybeSa = true;
-                if (this.postava.getY() - this.vykreslovacPredmetov.getPlayerTexture().getHeight() < 0) {
-                    this.hitDole = true;
-                    this.zmenLokalitu(this.vykreslovacPozadiLokalit);
-                    this.hitDole = false;
-                } else {
-                    //this.batch.draw(this.vykreslovacPredmetov.getPlayerMovingDown(), (float) this.postava.getX(), (float) this.postava.getY());
-                    this.postava.nastavPoziciuHraca(this.postava.getX(), this.postava.getY() - 10);
-                }
-               this.batch.draw(this.vykreslovacPredmetov.getPlayerTexture(), (float) this.postava.getX(), (float) this.postava.getY());
-                this.hybeSa = false;
-                System.out.println("----------posun dole sa vydaril.");
+            if (this.postava.getY() - this.vykreslovacPredmetov.getPlayerTexture().getHeight() < 0) {
+                this.hitDole = true;
+                this.zmenLokalitu(this.vykreslovacPozadiLokalit);
+                this.hitDole = false;
+            } else {
+                //this.batch.draw(this.vykreslovacPredmetov.getPlayerMovingDown(), (float) this.postava.getX(), (float) this.postava.getY());
+                this.postava.nastavPoziciuHraca(this.postava.getX(), this.postava.getY() - 10);
             }
+            this.batch.draw(this.vykreslovacPredmetov.getPlayerTexture(), (float) this.postava.getX(), (float) this.postava.getY());
+            this.hybeSa = false;
+            System.out.println("----------posun dole sa vydaril.");
         }
+    }
 
     private void nastavPohnutieHore() {
         if (!this.hybeSa && Gdx.input.isKeyPressed(Input.Keys.UP)) {
@@ -145,7 +153,7 @@ public class Ovladanie implements IOvladanie {
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(this.sprites[this.spriteIndex], (float)this.postava.getX(), (float)this.postava.getY());
+        batch.draw(this.sprites[this.spriteIndex], (float) this.postava.getX(), (float) this.postava.getY());
     }
 
 
@@ -256,25 +264,37 @@ public class Ovladanie implements IOvladanie {
         } else {
             if (hitVpravo) {
                 this.postava.getAktualnaLokalita();
-                this.postava.setX(Gdx.graphics.getWidth() - (int)this.vykreslovacPredmetov.getPlayerTexture().getWidth());
+                this.postava.setX(Gdx.graphics.getWidth() - (int) this.vykreslovacPredmetov.getPlayerTexture().getWidth());
             } else if (hitDole) {
                 this.postava.setY(0);
             } else if (hitVlavo) {
                 this.postava.setX(0);
             } else if (hitHore) {
-                this.postava.setY(Gdx.graphics.getHeight() - (int)this.vykreslovacPredmetov.getPlayerTexture().getHeight());
+                this.postava.setY(Gdx.graphics.getHeight() - (int) this.vykreslovacPredmetov.getPlayerTexture().getHeight());
             }
         }
     }
 
-    public void kontrolaKolizii() {
+
+    private void kontrolaKolizii() {
+        this.generatorLokalit.
+
+    }
+
+    /*public HashMap<Set<String, IPredmet> kontrolaKolizii() {
+        HashMap<Set<String>, IPredmet> predmetyNaPridanie = new HashMap<>(); // nech sa pridáva do ruksaka a zároveň nech znizne z vykreslovania lokalit
         int PostavaX = this.postava.getX();
-        this.postava.getAktualnaLokalita().dajPredmetyVLokalite();
         for (int i = 0; i < this.postava.getAktualnaLokalita().getPredmetyVLokalite().size(); i++) {
-
+            for (IPredmet value : this.postava.getAktualnaLokalita().getPredmetyVLokalite().values()) {
+                if (value.getX() == PostavaX) {
+                    System.out.println("ZISTIL SOM KOLIIIIIIIIIIIZIUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+                    predmetyNaPridanie.put(this.postava.getAktualnaLokalita().getPredmetyVLokalite().keySet(), value);
+                } else {
+                    continue;
+                }
             }
-        }
+        } return predmetyNaPridanie;
     }
 
-
-
+     */
+}

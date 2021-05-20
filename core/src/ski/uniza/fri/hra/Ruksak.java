@@ -1,9 +1,7 @@
 package ski.uniza.fri.hra;
 
 import ski.uniza.fri.predmety.IPredmet;
-import ski.uniza.fri.predmety.Predmet;
-
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Trieda Ruksak sluzi ako hracov inventar. Nesie si v nom vsetky predmety, pricom ako kazdy ruksak ma svoju nosnost.
@@ -17,10 +15,11 @@ public class Ruksak {
     // Atribúty pre triedu Ruksak
     //----------------------------
 
+    private Ovladanie ovladanie;
     private Postava postava;
     private static final int KAPACITA = 10; // v ruksaku moze by t najviac 10 predmetov
     private int aktualnyPocetPredmetovVRuksaku = 0;
-    private final ArrayList<IPredmet> predmety = new ArrayList<>();
+    private HashMap<String, IPredmet> predmety = new HashMap<>();
 
     /**
      * (Ruksak) konštruktor triedy Ruksak.
@@ -28,6 +27,7 @@ public class Ruksak {
      */
     public Ruksak(Postava postava) {
         this.postava = postava;
+        this.postava.aktualizujOvladanie(this.ovladanie);
     }
 
     /**
@@ -35,15 +35,14 @@ public class Ruksak {
      * ak sa presiahne kapacita ruksaku, predmet sa nepridá.
      * @param predmet
      */
-    public void pridajDoRuksaku(IPredmet predmet) {
-        predmet = this.postava.getAktualnaLokalita().vezmiPredmet(predmet.toString());
+    public void pridajDoRuksaku(IPredmet predmet) { // predmet is null
+       this.postava.getAktualnaLokalita().vezmiPredmet(predmet);
         try {
-            if(predmet.daSaPouzit()) {
-                if (aktualnyPocetPredmetovVRuksaku != KAPACITA) {
-                    this.predmety.add(predmet);
-                    aktualnyPocetPredmetovVRuksaku++;
-                    System.out.println("------som pridal do ruksakuuu-------");
-                } else {
+            if (predmet.daSaPouzit()) {
+                this.predmety.put(this.ovladanie.kontrolaKolizii())
+                        aktualnyPocetPredmetovVRuksaku++;
+                        System.out.println("------som pridal do ruksakuuu-------");
+                }else {
                     System.out.println("Ruksak je plny. Nepodarilo sa pridať predmet.");
                 }
             } else {
@@ -56,7 +55,7 @@ public class Ruksak {
 
     //ošetriť + vykreslenie
     public IPredmet vyberZRuksaku(IPredmet predmet){
-        for (IPredmet iPredmet : this.predmety) {
+        for (IPredmet iPredmet : this.predmety.values()) {
             if (predmet != null) {
                 this.predmety.remove(predmet);
                 this.postava.getAktualnaLokalita().vlozPredmetDoLokality(predmet);
@@ -66,19 +65,15 @@ public class Ruksak {
     }
 
     public void vypisVsetkyPredmetyVRuksaku() {
-        System.out.println("Predmety, ktoré máš práve v ruksaku: ");
-
-        for (IPredmet predmet : this.predmety) {
-            System.out.println("Predmety, ktoré máš aktuálne v ruksaku: " + predmet.dajNazov());
+        for (String s : this.predmety.keySet()) {
+            System.out.println("Predmety, ktoré máš aktuálne v ruksaku: " + s);
 
         }
     }
 
-    public ArrayList<IPredmet> dajPredmetyVRuksakuObjektovo() {
-        System.out.println("Predmety, ktoré máš práve v ruksaku: ");
-
-        for (IPredmet predmet : this.predmety) {
-            System.out.println("Predmety, ktoré máš aktuálne v ruksaku: " + predmet.dajNazov());
+    public HashMap<String, IPredmet> dajPredmetyVRuksakuObjektovo() {
+        for (String s : this.predmety.keySet()) {
+            System.out.println("Predmety, ktoré máš aktuálne v ruksaku: " + s.toString());
 
         } return this.predmety;
     }

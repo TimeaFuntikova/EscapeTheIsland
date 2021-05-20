@@ -13,7 +13,7 @@ public interface IMapa {
 
     Lokalita hladajLokalitu(String hladanaLokalita);
 
-    IPredmet vezmiPredmet(String predmet);
+    IPredmet vezmiPredmet(IPredmet predmet);
 
     void naplnMiestnost(IPredmet predmet);
 

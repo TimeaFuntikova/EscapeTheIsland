@@ -7,8 +7,6 @@ import ski.uniza.fri.predmety.IPredmet;
 import ski.uniza.fri.predmety.Kokos;
 import ski.uniza.fri.vykreslovace.VykreslovacPozadiLokalit;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

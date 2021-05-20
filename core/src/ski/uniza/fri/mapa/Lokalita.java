@@ -52,6 +52,7 @@ public class Lokalita implements IMapa {
      * @return Hashmap
      */
     public HashMap<String, IPredmet> getPredmetyVLokalite() {
+        this.predmetyVLokalite = this.generatorLokalit.dajPredmetyNaVykreslenie();
         return predmetyVLokalite;
     }
 
@@ -89,7 +90,7 @@ public class Lokalita implements IMapa {
      * @return
      */
     @Override
-    public IPredmet vezmiPredmet(String predmet) {
+    public IPredmet vezmiPredmet(IPredmet predmet) {
         return this.predmetyVLokalite.remove(predmet);
     }
 

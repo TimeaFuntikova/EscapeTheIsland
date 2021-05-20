@@ -7,8 +7,10 @@ import ski.uniza.fri.mapa.Lokalita;
 import ski.uniza.fri.predmety.IPredmet;
 import ski.uniza.fri.predmety.Potraviny;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
+import sun.jvm.hotspot.ui.action.HSDBActionManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Trieda Postava predstavuje virtuálnu postavu, ktorou je hŕač. Presúva na na rôzne lokality a môže zbierať predmety,
@@ -76,7 +78,6 @@ public class Postava {
      */
     public void aktualizujOvladanie(Ovladanie ovladanie) {
         this.ovladanie = ovladanie;
-
     }
 
     /**
@@ -157,7 +158,7 @@ public class Postava {
 
     public void zjedzPredmet(IPredmet predmet) {
         if (predmet instanceof Potraviny) {
-            predmet = this.lokalita.vezmiPredmet(predmet.toString());
+            predmet = this.lokalita.vezmiPredmet(predmet);
             this.energy += ((Potraviny) predmet).getEnergy();
         } else {
             System.out.println("čosi s predmetom je zle. Bud sa neda zjest alebo nie je instanciou triedy potraviny a nevie dat energiu");
@@ -217,11 +218,12 @@ public class Postava {
      */
     public void zoberPredmet(IPredmet predmet) {
         this.ruksak.pridajDoRuksaku(predmet);
-        this.lokalita.vezmiPredmet(predmet.toString());
+        this.lokalita.vezmiPredmet(predmet);
         //vlozit ho do ruksaka a zaroven ho vymazat v miestnosti.
     }
 
-    public ArrayList<IPredmet> dajPredmetyVRuksaku() {
+    public HashMap<String, IPredmet> dajPredmetyVRuksaku() {
+        System.out.println(this.ruksak.dajPredmetyVRuksakuObjektovo());
        return this.ruksak.dajPredmetyVRuksakuObjektovo();
     }
 

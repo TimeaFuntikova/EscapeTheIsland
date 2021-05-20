@@ -56,19 +56,14 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         this.generatorLokalit = new GeneratorLokalit(this.generatorPredmetov);
         this.lokalita = new Lokalita(this.generatorLokalit);
         this.ovladanie = new Ovladanie();
-
         //treba najskor zavolat vytvorenie lokalit inak generator predmetov pracuje s prázdnou inštanciou
         this.generatorLokalit.vytvorLokality(); // vytvori prazdne konkretne lokality + //vytvori sa lokalita bez nazvu
-
         this.postava = new Postava( this.lokalita, this.vykreslovacPredmetov, this.batch); //postava bez aktualnej lokality ale schopna sa neskor vykreslit
         this.generatorPredmetov.initGeneratorPredmetov(this.vykreslovacPredmetov, this.generatorLokalit, this.postava);
-
         this.generatorLokalit.nastavAktualnuLokalitu(this.lokalita.hladajLokalitu("plaz")); //za aktualnu sa na zaciatok nastavi v tejto triede plaz
-
         this.generatorLokalit.naplnLokality(this.vykreslovacPredmetov); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia. // iba ta aktualna
-        //hodí sem pláž
         //this.generatorLokalit.nastavAktualnuLokalitu(this.lokalita.hladajLokalitu("plaz"));
-        this.postava.getAktualnaLokalita();
+        this.postava.getAktualnaLokalita();  //pláž
         this.ovladanie = new Ovladanie(this.postava, this.batch, this.vykreslovacPredmetov, this.generatorLokalit, this.vykreslovacPozadiLokalit);
         this.postava.aktualizujOvladanie(this.ovladanie);
 
