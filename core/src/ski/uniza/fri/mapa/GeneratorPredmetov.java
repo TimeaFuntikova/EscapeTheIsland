@@ -20,6 +20,8 @@ public class GeneratorPredmetov {
      * @param generatorLokalit
      * @param postava
      */
+
+
     public void initGeneratorPredmetov(VykreslovacPredmetov vykreslovac, GeneratorLokalit generatorLokalit, Postava postava) {
         this.vykreslovac = vykreslovac;
         this.generatorLokalit = generatorLokalit;

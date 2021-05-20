@@ -56,7 +56,7 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         this.ovladanie = new Ovladanie();
 
         //treba najskor zavolat vytvorenie lokalit inak generator predmetov pracuje s prázdnou inštanciou
-        this.generatorLokalit.vytvorLokality(); // vytvori lokality + //vytvori sa lokalita bez nazvu
+        this.generatorLokalit.vytvorLokality(); // vytvori prazdne konkretne lokality + //vytvori sa lokalita bez nazvu
 
         this.postava = new Postava( this.lokalita, this.vykreslovacPredmetov, this.batch); //postava bez aktualnej lokality ale schopna sa neskor vykreslit
         this.generatorPredmetov.initGeneratorPredmetov(this.vykreslovacPredmetov, this.generatorLokalit, this.postava);
@@ -117,7 +117,6 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
 
 /**
  * (Hra) Getter na pomocníka.
- * (Hra) Metóda na ukončenie hry.
  */
 
 

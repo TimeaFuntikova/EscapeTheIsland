@@ -87,6 +87,7 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
     private Kokos kokosPlazovy1;
     private Kokos kokosPlazovy2;
     private Kokos kokosPlazovy3;
+    private Kokos kokosCesta;
     private Drevo drevoLesne1;
     private Drevo drevoLesne2;
 
@@ -192,6 +193,7 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
         plaz.naplnMiestnost(this.kokosPlazovy3);
         les.naplnMiestnost(this.drevoLesne1);
         les.naplnMiestnost(this.drevoLesne2);
+        cesta.naplnMiestnost(this.kokosCesta);
         this.naplnovac();
     }
 
@@ -201,6 +203,7 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
         this.kokosPlazovy3 = new Kokos(vykreslovac.getKokosTexture(), 640, 250, 10, 10, "Kokos3", 10);
         this.drevoLesne1 = new Drevo(vykreslovac.getDrevoTexture(), 500, 100, 10, 10, "DrevoLesne1");
         this.drevoLesne2 =  new Drevo(vykreslovac.getPatykTexture(), 200, 200, 50, 50, "patyk1");
+        this.kokosCesta = new Kokos(vykreslovac.getKokosTexture(), 100,300,10,10,"Kokos4", 10);
     }
 
     private void mazacPredmetov() {
@@ -220,19 +223,14 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
                 mazacPredmetov();
                 this.predmetyNaVykreslenie.put("DrevoLesne1", this.drevoLesne1);
                 this.predmetyNaVykreslenie.put("Patyk1", this.drevoLesne2);
-            }
-            /*
-            else if (aktualnaLokalita == this.lietadlo) {
+            } else if (aktualnaLokalita == this.cesta) {
                 mazacPredmetov();
-                this.predmetyNaVykreslenie.put("DrevoLesne1", this.drevoLesne1);
-                this.predmetyNaVykreslenie.put("Patyk1", this.drevoLesne2);
+                this.predmetyNaVykreslenie.put("Kokos4", this.kokosCesta);
+
             }
-
-             */
+            System.out.println("Nie su tu ziadne predmety na vykreslenie. lokalita uz nema v sebe ziadne predmety. ");
         }
-        System.out.println("Nie su tu ziadne predmety na vykreslenie. lokalita uz nema v sebe ziadne predmety. ");
     }
-
 
     //metoda na vyhodene predmety z ruksaku a odchyt predmetov:
 

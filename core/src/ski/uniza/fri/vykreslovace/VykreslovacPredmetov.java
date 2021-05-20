@@ -16,8 +16,38 @@ public class VykreslovacPredmetov extends ApplicationAdapter {
 
     public VykreslovacPredmetov() {}
 
+    /**
+     * ------------------------REFAKTORING TEXTURY HRACA ____________________________________
+     *
+     */
+
     public Sprite getPlayerTexture() {
-        return new Sprite (new Sprite(this.texture = new Texture("postavaDEMO.png")));
+        return new Sprite (new Sprite(this.texture = new Texture("postavaspredu1.png")));
+    }
+
+    public Sprite[] getPlayerMovingDown() {
+        return new Sprite[]{(new Sprite(this.texture = new Texture("postavaspredu3.png"))),
+                new Sprite(this.texture = new Texture("postavaspredu2.png"))
+        };
+    }
+
+    public Sprite[] getPlayerMovingUp() {
+        return new Sprite[]{(new Sprite(this.texture = new Texture("postavazozadu3.png"))),
+                new Sprite(this.texture = new Texture("postavazozadu2.png"))
+        };
+    }
+
+    public Sprite[] getPlayerMovingRight() {
+        return new Sprite[]{(new Sprite(this.texture = new Texture("postavaVpravo1.png"))),
+                new Sprite(this.texture = new Texture("postavaVpravo2.png")),
+                new Sprite(this.texture = new Texture("postavavpravo3.png"))
+        };
+    }
+
+    public Sprite[] getPlayerMovingLeft() {
+        return new Sprite[]{(new Sprite(this.texture = new Texture("postavaVlavo3.png"))),
+                new Sprite(this.texture = new Texture("postavaVlavo2.png")),
+        };
     }
 
     public Sprite getKokosTexture() {

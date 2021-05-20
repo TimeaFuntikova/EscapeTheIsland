@@ -2,6 +2,7 @@ package ski.uniza.fri.hra;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ski.uniza.fri.mapa.GeneratorLokalit;
 import ski.uniza.fri.mapa.Lokalita;
@@ -26,12 +27,19 @@ public class Ovladanie implements IOvladanie {
     private VykreslovacPozadiLokalit vykreslovacPozadiLokalit;
     private Postava postava;
     private SpriteBatch batch;
+    private Sprite[] sprites;
     private VykreslovacPredmetov vykreslovacPredmetov;
     private boolean hybeSa = false;
+    private boolean hybeSaDole = false;
+    private boolean hybeSaHore = false;
+    private boolean hybeSaVpravo = false;
+    private boolean hybeSaVlavo = false;
+
     private boolean hitVpravo = false;
     private boolean hitVlavo = false;
     private boolean hitHore = false;
     private boolean hitDole = false;
+    private int spriteIndex;
 
     /**
      * (Ovladanie) Končtruktor triedy, kde sa inicializujú dané parametre.
@@ -48,6 +56,8 @@ public class Ovladanie implements IOvladanie {
         this.vykreslovacPredmetov = vykreslovacPredmetov;
         this.generatorLokalit = generatorLokalit;
         this.vykreslovacPozadiLokalit = vykreslovacPozadiLokalit;
+        this.sprites = this.vykreslovacPredmetov.getPlayerMovingDown();
+        this.spriteIndex = 0;
     }
 
     /**
@@ -91,6 +101,7 @@ public class Ovladanie implements IOvladanie {
                 this.zmenLokalitu(this.vykreslovacPozadiLokalit);
                 this.hitVpravo = false;
             } else {
+                this.sprites = this.vykreslovacPredmetov.getPlayerMovingRight();
                 this.postava.nastavPoziciuHraca(this.postava.getX() + 10, this.postava.getY());
             }
             this.batch.draw(this.vykreslovacPredmetov.getPlayerTexture(), (float) this.postava.getX(), (float) this.postava.getY());
@@ -98,22 +109,24 @@ public class Ovladanie implements IOvladanie {
             System.out.println("----------posun doprava sa vydaril.");
         }
     }
-
+    //implementovane pohyby ale nie vykreslene
     private void nastavPohnutieDole() {
         if (!this.hybeSa && Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            this.sprites = this.vykreslovacPredmetov.getPlayerMovingDown();
             this.hybeSa = true;
-            if (this.postava.getY() - this.vykreslovacPredmetov.getPlayerTexture().getHeight() < 0) {
-                this.hitDole = true;
-                this.zmenLokalitu(this.vykreslovacPozadiLokalit);
-                this.hitDole = false;
-            } else {
-                this.postava.nastavPoziciuHraca(this.postava.getX(), this.postava.getY() - 10);
+                if (this.postava.getY() - this.vykreslovacPredmetov.getPlayerTexture().getHeight() < 0) {
+                    this.hitDole = true;
+                    this.zmenLokalitu(this.vykreslovacPozadiLokalit);
+                    this.hitDole = false;
+                } else {
+                    //this.batch.draw(this.vykreslovacPredmetov.getPlayerMovingDown(), (float) this.postava.getX(), (float) this.postava.getY());
+                    this.postava.nastavPoziciuHraca(this.postava.getX(), this.postava.getY() - 10);
+                }
+               this.batch.draw(this.vykreslovacPredmetov.getPlayerTexture(), (float) this.postava.getX(), (float) this.postava.getY());
+                this.hybeSa = false;
+                System.out.println("----------posun dole sa vydaril.");
             }
-            this.batch.draw(this.vykreslovacPredmetov.getPlayerTexture(), (float) this.postava.getX(), (float) this.postava.getY());
-            this.hybeSa = false;
-            System.out.println("----------posun dole sa vydaril.");
         }
-    }
 
     private void nastavPohnutieHore() {
         if (!this.hybeSa && Gdx.input.isKeyPressed(Input.Keys.UP)) {
@@ -130,6 +143,11 @@ public class Ovladanie implements IOvladanie {
             System.out.println("----------posun hore sa vydaril.");
         }
     }
+
+    public void draw(SpriteBatch batch) {
+        batch.draw(this.sprites[this.spriteIndex], (float)this.postava.getX(), (float)this.postava.getY());
+    }
+
 
     //***************************************************************
     // TOTO PREROBIT DO INEJ TRIEDY A NIE DO OVLADANIA POSTAVY ?!!!!
