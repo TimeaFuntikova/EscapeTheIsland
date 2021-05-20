@@ -1,6 +1,7 @@
 package ski.uniza.fri.hra;
 
 import ski.uniza.fri.predmety.IPredmet;
+import ski.uniza.fri.predmety.Predmet;
 
 import java.util.ArrayList;
 
@@ -27,14 +28,6 @@ public class Ruksak {
      */
     public Ruksak(Postava postava) {
         this.postava = postava;
-    }
-
-    /**
-     * (Ruksak) Getter na aktuálny počet predmetov v ruksaku. ----Treba?
-     * @return
-     */
-    public int getAktualnyPocetPredmetovVRuksaku() {
-        return aktualnyPocetPredmetovVRuksaku;
     }
 
     /**
@@ -81,7 +74,16 @@ public class Ruksak {
         }
     }
 
-    public boolean jePlny (IPredmet predmet) {
+    public ArrayList<IPredmet> dajPredmetyVRuksakuObjektovo() {
+        System.out.println("Predmety, ktoré máš práve v ruksaku: ");
+
+        for (IPredmet predmet : this.predmety) {
+            System.out.println("Predmety, ktoré máš aktuálne v ruksaku: " + predmet.dajNazov());
+
+        } return this.predmety;
+    }
+
+    public boolean jePlny(IPredmet predmet) {
         if (predmet != null) {
             if (this.aktualnyPocetPredmetovVRuksaku < KAPACITA) {
                 this.aktualnyPocetPredmetovVRuksaku++;

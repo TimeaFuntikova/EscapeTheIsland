@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ski.uniza.fri.mapa.GeneratorLokalit;
 import ski.uniza.fri.mapa.GeneratorPredmetov;
@@ -36,7 +37,7 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
     private HlavneMenu hlavneMenu;
     private SpriteBatch batch;
     private Ovladanie ovladanie;
-
+    private BitmapFont font;
 
     //private Ruksacik ruksacik;
     // private Pomocnik pomocnik;
@@ -47,6 +48,7 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
      */
     @Override
     public void create() {
+        this.font = new BitmapFont();
         this.vykreslovacPredmetov = new VykreslovacPredmetov();
         this.vykreslovacPozadiLokalit = new VykreslovacPozadiLokalit();
         this.batch = new SpriteBatch();
@@ -91,6 +93,8 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             System.exit(0);
         }
+
+        this.font.draw(this.batch, "Predmety v ruksaku: " + this.postava.dajPredmetyVRuksaku(), 10,Gdx.graphics.getHeight() - 20);
         batch.end();
     }
 

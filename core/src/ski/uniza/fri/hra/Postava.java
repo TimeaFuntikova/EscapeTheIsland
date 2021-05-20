@@ -8,6 +8,8 @@ import ski.uniza.fri.predmety.IPredmet;
 import ski.uniza.fri.predmety.Potraviny;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 
+import java.util.ArrayList;
+
 /**
  * Trieda Postava predstavuje virtuálnu postavu, ktorou je hŕač. Presúva na na rôzne lokality a môže zbierať predmety,
  * vytvárať nové, ukladať ich do svojho batoha alebo ich vhodným spôsobom využiť vo svoj prospech na opustenie ostrova.
@@ -217,6 +219,10 @@ public class Postava {
         this.ruksak.pridajDoRuksaku(predmet);
         this.lokalita.vezmiPredmet(predmet.toString());
         //vlozit ho do ruksaka a zaroven ho vymazat v miestnosti.
+    }
+
+    public ArrayList<IPredmet> dajPredmetyVRuksaku() {
+       return this.ruksak.dajPredmetyVRuksakuObjektovo();
     }
 
 

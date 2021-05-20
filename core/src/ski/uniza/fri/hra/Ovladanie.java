@@ -266,23 +266,15 @@ public class Ovladanie implements IOvladanie {
             }
         }
     }
-}
 
-/**
- * -----------------DORABA SA________________________________ + ešte či je v aktualnej lokalite
- * ++ kam ju implmentovať ??
- */
-    /*public void kontrolaKolizii(Lokalita aktualna) {
-
-        aktualna.dajPredmetyVLokalite();
+    public void kontrolaKolizii() {
         int PostavaX = this.postava.getX();
-        IPredmet predmet = aktualna.dajPredmetyVLokalite(); // predmet : da kokos !!!
-        for (int i = 0; i < aktualna.getPredmetyVLokalite().size(); i++) { //aktualna : nema nazov je null
-            if (predmet instanceof Kokos || predmet instanceof Drevo) {
-                if(predmet.getX() == PostavaX)
-                this.postava.zoberPredmet(predmet);
+        this.postava.getAktualnaLokalita().dajPredmetyVLokalite();
+        for (int i = 0; i < this.postava.getAktualnaLokalita().getPredmetyVLokalite().size(); i++) {
+
             }
         }
-    }*/
+    }
+
 
 

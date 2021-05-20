@@ -36,6 +36,7 @@ public class Lokalita implements IMapa {
     public Lokalita(String nazov, GeneratorLokalit generatorLokalit) {
         this.nazovLokality = nazov;   //hasmapy sú inicializované pri deklaracii atributov;
         this.generatorLokalit = generatorLokalit;
+        this.predmetyVLokalite = this.generatorLokalit.dajPredmetyNaVykreslenie();
     }
 
     /**
@@ -99,7 +100,6 @@ public class Lokalita implements IMapa {
      */
     @Override
     public void vlozPredmetDoLokality(IPredmet predmet) {
-        this.predmetyVLokalite = this.generatorLokalit.dajPredmetyNaVykreslenie();
         if (predmet != null) {
             this.predmetyVLokalite.put(predmet.dajNazov(), predmet);
         }

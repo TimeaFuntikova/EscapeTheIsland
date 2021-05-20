@@ -1,5 +1,6 @@
 package ski.uniza.fri.mapa;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ski.uniza.fri.predmety.Drevo;
 import ski.uniza.fri.predmety.IPredmet;
@@ -83,13 +84,20 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
         return sopka;
     }
 
-    //predmety: je toto vobedc nutne?
+    //predmety: je potrebne mat atributy aby sa dalo jednotlive objekty odoberať resp.pridavať do ruksaku
+    //mozno to poriesit ako boolen: je VRuksaku - nevykreslí sa znova.
     private Kokos kokosPlazovy1;
     private Kokos kokosPlazovy2;
     private Kokos kokosPlazovy3;
     private Kokos kokosCesta;
+    private Kokos kokosCesta2;
     private Drevo drevoLesne1;
     private Drevo drevoLesne2;
+    private Drevo drevoUtes;
+    private Drevo drevoCesta1;
+    private Drevo drevoCesta2;
+    private Drevo patyk3;
+
 
     public HashMap<String, Lokalita> getVsetkyLokality() {
         this.naplnZoznamLokalit();
@@ -185,7 +193,6 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
     public void naplnLokality(VykreslovacPredmetov vykreslovacPredmetov) {
         this.vykreslovac = vykreslovacPredmetov;
         //naplnenie lokalit predmetmmi v nich
-        //na cestu drevo dat a iné suroviny este nie len kokosy
 
         nastavovacPredmetov();
         plaz.naplnMiestnost(this.kokosPlazovy1);
@@ -194,22 +201,32 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
         les.naplnMiestnost(this.drevoLesne1);
         les.naplnMiestnost(this.drevoLesne2);
         cesta.naplnMiestnost(this.kokosCesta);
+        cesta.naplnMiestnost(this.kokosCesta2);
+        cesta.naplnMiestnost(this.drevoCesta1);
+        cesta.naplnMiestnost(this.drevoCesta2);
+        cesta.naplnMiestnost(this.patyk3);
+        utes.naplnMiestnost(this.drevoUtes);
+
         this.naplnovac();
     }
 
     private void nastavovacPredmetov() {
+        //zapodmienkovať existuj. atributy aby sa do zoznamu na vykreslenie nedostalo null
         this.kokosPlazovy1 = new Kokos(vykreslovac.getKokosTexture(), 800, 350, 10, 10, "Kokos1", 10);
         this.kokosPlazovy2 = new Kokos(vykreslovac.getKokosTexture(), 740, 290, 10, 10, "Kokos2", 10);
         this.kokosPlazovy3 = new Kokos(vykreslovac.getKokosTexture(), 640, 250, 10, 10, "Kokos3", 10);
         this.drevoLesne1 = new Drevo(vykreslovac.getDrevoTexture(), 500, 100, 10, 10, "DrevoLesne1");
         this.drevoLesne2 =  new Drevo(vykreslovac.getPatykTexture(), 200, 200, 50, 50, "patyk1");
         this.kokosCesta = new Kokos(vykreslovac.getKokosTexture(), 100,300,10,10,"Kokos4", 10);
+        this.kokosCesta2 = new Kokos(vykreslovac.getKokosTexture(), 120, 350,10,10, "Kokos5", 10);
+        this.drevoUtes = new Drevo(vykreslovac.getPatykTexture(), Gdx.graphics.getWidth() - 50, 20,10,10,"Patyk2");
+        this.drevoCesta1 = new Drevo(vykreslovac.getDrevoTexture(), 500,200,10,10 ,"DrevoCesta1");
+        this.drevoCesta2 = new Drevo(vykreslovac.getDrevoTexture(), 650,300,10,10 ,"DrevoCesta2");
+        this.patyk3 = new Drevo(vykreslovac.getPatykTexture(), 520, 420, 10,10, "Patyk3");
     }
 
     private void mazacPredmetov() {
         predmetyNaVykreslenie.clear(); //posúvací zoznam keď sa vezmú veci na nakreslenie bude null.
-        //hra tým padom padne + ošetriť null
-        //ak je null tak na objekte by sa nemalo robiť nič.
     }
 
     public void naplnovac() { //planovac
@@ -226,7 +243,16 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
             } else if (aktualnaLokalita == this.cesta) {
                 mazacPredmetov();
                 this.predmetyNaVykreslenie.put("Kokos4", this.kokosCesta);
-
+                this.predmetyNaVykreslenie.put("Kokos5", this.kokosCesta2);
+                this.predmetyNaVykreslenie.put("DrevoCesta1", this.drevoCesta1);
+                this.predmetyNaVykreslenie.put("DrevoCesta2", this.drevoCesta2);
+                this.predmetyNaVykreslenie.put("Patyk3", this.patyk3);
+            } else if (aktualnaLokalita == this.utes) {
+                mazacPredmetov();
+                this.predmetyNaVykreslenie.put("Patyk2", this.drevoUtes);
+            } else if (aktualnaLokalita == this.lietadlo) {
+                mazacPredmetov();
+                this.predmetyNaVykreslenie.put("Patyk2", this.drevoUtes);
             }
             System.out.println("Nie su tu ziadne predmety na vykreslenie. lokalita uz nema v sebe ziadne predmety. ");
         }
