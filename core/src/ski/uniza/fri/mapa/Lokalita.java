@@ -18,13 +18,12 @@ public class Lokalita implements IMapa {
 
     private final String nazovLokality;
     private GeneratorLokalit generatorLokalit;
-    private HashMap<String,IPredmet> predmetyVLokalite = new HashMap<>();
-    private HashMap<String, Lokalita> vychody = new HashMap<>(); //treba vobec ako??
+    private HashMap<String,IPredmet> predmetyVLokalite = new HashMap<>(); //pouziva sa?
 
     /**
      * (Loklita) Konštruktor ktorý si v sebe nainicializuje generator lokalit
      */
-    public Lokalita(GeneratorLokalit generatorLokalit) { //null
+    public Lokalita(GeneratorLokalit generatorLokalit) {
         this("nema nazov", generatorLokalit);
         this.generatorLokalit = generatorLokalit;
     }
@@ -122,7 +121,6 @@ public class Lokalita implements IMapa {
             System.out.println(s);
             return s = this.predmetyVLokalite.toString();
         }
-        //su tuto vypisy nutne? -- poriesit inak
         System.out.println("žiaden predmet v miestnosti nie je.");
         return null;
     }
@@ -131,7 +129,6 @@ public class Lokalita implements IMapa {
         for (IPredmet predmet : predmetyVLokalite.values()) {
             System.out.println(predmet);
             return predmet;
-
         } return null;
     }
 

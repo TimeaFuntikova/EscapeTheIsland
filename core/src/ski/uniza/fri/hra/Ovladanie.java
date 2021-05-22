@@ -78,7 +78,7 @@ public class Ovladanie implements IOvladanie {
         this.nastavPohnutieDole();
         this.nastavPohnutieDoprava();
         this.nastavPohnutieDolava();
-        this.kontrolaKolizii();
+        this.generatorLokalit.kontrolaKoliziiPosunuta();
     }
 
 
@@ -156,18 +156,13 @@ public class Ovladanie implements IOvladanie {
         batch.draw(this.sprites[this.spriteIndex], (float) this.postava.getX(), (float) this.postava.getY());
     }
 
-
-    //***************************************************************
-    // TOTO PREROBIT DO INEJ TRIEDY A NIE DO OVLADANIA POSTAVY ?!!!!
-    //***************************************************************
-
     private void vypisAktualnejLokality() {
         System.out.println("Aktuálna lokalita sa zmenila na : " + this.postava.getAktualnaLokalita().dajNazovLokality());
     }
 
     private void zmenaNaVykreslenieAVypis() {
         this.generatorLokalit.vykresliPozadieLokality(this.vykreslovacPozadiLokalit, this.batch);
-        this.generatorLokalit.naplnovac();
+        this.generatorLokalit.naplnovacPosunuty();
         vypisAktualnejLokality();
     }
 
@@ -274,27 +269,4 @@ public class Ovladanie implements IOvladanie {
             }
         }
     }
-
-
-    private void kontrolaKolizii() {
-        this.generatorLokalit.
-
-    }
-
-    /*public HashMap<Set<String, IPredmet> kontrolaKolizii() {
-        HashMap<Set<String>, IPredmet> predmetyNaPridanie = new HashMap<>(); // nech sa pridáva do ruksaka a zároveň nech znizne z vykreslovania lokalit
-        int PostavaX = this.postava.getX();
-        for (int i = 0; i < this.postava.getAktualnaLokalita().getPredmetyVLokalite().size(); i++) {
-            for (IPredmet value : this.postava.getAktualnaLokalita().getPredmetyVLokalite().values()) {
-                if (value.getX() == PostavaX) {
-                    System.out.println("ZISTIL SOM KOLIIIIIIIIIIIZIUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-                    predmetyNaPridanie.put(this.postava.getAktualnaLokalita().getPredmetyVLokalite().keySet(), value);
-                } else {
-                    continue;
-                }
-            }
-        } return predmetyNaPridanie;
-    }
-
-     */
 }

@@ -7,9 +7,6 @@ import ski.uniza.fri.mapa.Lokalita;
 import ski.uniza.fri.predmety.IPredmet;
 import ski.uniza.fri.predmety.Potraviny;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
-import sun.jvm.hotspot.ui.action.HSDBActionManager;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -119,9 +116,6 @@ public class Postava {
      */
     public void pohniSa() { //opravene
         this.ovladanie.nastavOvladaniePostavy();
-        //this.ovladanie.kontrolaKolizii(this.aktualnaLokalita);
-
-
         // odpocitavajEnergy(); poriešiť vzhladom na sprite(s)...
     }
 
@@ -165,20 +159,6 @@ public class Postava {
         }
     }
 
-    public void otvorRuksak() {
-        this.ruksak.vypisVsetkyPredmetyVRuksaku();
-    }
-
-    /**
-     * (Postava) Pridáva do virtuálneho ruksaku predmety. Kontroluje, či sa vôbec nejaký predmet pridáva a áno, tak skontoroluje, či sa dá použiť.
-     * ak sa presiahne kapacita ruksaku, predmet sa nepridá.
-     *
-     * @param predmet
-     */
-    public void pridajDoRuksaku(IPredmet predmet) {
-        this.ruksak.pridajDoRuksaku(predmet);
-    }
-
     public void vyberZRuksaku(IPredmet predmet) {
         this.ruksak.vyberZRuksaku(predmet);
     }
@@ -214,7 +194,7 @@ public class Postava {
     /**
      * (Postava) Zavola metodu z Ruksaku na vzatie predmetu do Ruksaku z miestnosti.
      *
-     * @param predmet
+     * @param
      */
     public void zoberPredmet(IPredmet predmet) {
         this.ruksak.pridajDoRuksaku(predmet);
@@ -222,52 +202,12 @@ public class Postava {
         //vlozit ho do ruksaka a zaroven ho vymazat v miestnosti.
     }
 
+
     public HashMap<String, IPredmet> dajPredmetyVRuksaku() {
         System.out.println(this.ruksak.dajPredmetyVRuksakuObjektovo());
        return this.ruksak.dajPredmetyVRuksakuObjektovo();
     }
 
-
-    /*public void poskladajNovyPredmet(IPredmet surovina1, IPredmet surovina2) {
-        IPredmet novypredmet;
-        if (surovina1 instanceof Ruksak && surovina2 instanceof Ruksak) {
-            ((Ruksak) surovina1).vyberZRuksaku(surovina1);
-            ((Ruksak) surovina2).vyberZRuksaku(surovina2);
-            novypredmet = new IPredmet() {
-                @Override
-                public String dajNazov() {
-                   return "novyPredmet.";
-                }
-
-                @Override
-                public boolean sluziNaOdplavenie() {
-                    return false;
-                }
-
-                @Override
-                public boolean daSaPouzit() {
-                    return false;
-                }
-
-                @Override
-                public boolean bolPouzity() {
-                    return false;
-                }
-
-                @Override
-                public void vypisStavPredmetu() {
-
-                }
-
-                @Override
-                public void nakresliSa(SpriteBatch batch) {
-
-                }
-            }
-
-        }
-
-    }*/
-
+ //skladanie lode
 
 }

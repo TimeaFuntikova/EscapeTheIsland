@@ -1,12 +1,13 @@
 package ski.uniza.fri.hra;
 
 import ski.uniza.fri.predmety.IPredmet;
+
 import java.util.HashMap;
 
 /**
  * Trieda Ruksak sluzi ako hracov inventar. Nesie si v nom vsetky predmety, pricom ako kazdy ruksak ma svoju nosnost.
  *
- * @author  Timea Funtíková
+ * @author Timea Funtíková
  * @version 1.0 (4.4.2021)
  */
 public class Ruksak {
@@ -23,6 +24,7 @@ public class Ruksak {
 
     /**
      * (Ruksak) konštruktor triedy Ruksak.
+     *
      * @param postava
      */
     public Ruksak(Postava postava) {
@@ -33,35 +35,38 @@ public class Ruksak {
     /**
      * (Ruksak) Pridáva do virtuálneho ruksaku predmety. Kontroluje, či sa vôbec nejaký predmet pridáva a áno, tak skontoroluje, či sa dá použiť.
      * ak sa presiahne kapacita ruksaku, predmet sa nepridá.
+     *
      * @param predmet
      */
     public void pridajDoRuksaku(IPredmet predmet) { // predmet is null
-       this.postava.getAktualnaLokalita().vezmiPredmet(predmet);
+        this.postava.getAktualnaLokalita().vezmiPredmet(predmet);
         try {
             if (predmet.daSaPouzit()) {
-                this.predmety.put(this.ovladanie.kontrolaKolizii())
-                        aktualnyPocetPredmetovVRuksaku++;
-                        System.out.println("------som pridal do ruksakuuu-------");
-                }else {
-                    System.out.println("Ruksak je plny. Nepodarilo sa pridať predmet.");
-                }
+                this.predmety.put(predmet.dajNazov(), predmet);
+                aktualnyPocetPredmetovVRuksaku++;
+                System.out.println("------som pridal do ruksakuuu-------");
+            } else if (!jePlny(predmet)) {
+                System.out.println("Ruksak je plny. Nepodarilo sa pridať predmet.");
             } else {
                 System.out.println("Nedá sa použiť.");
             }
-        } catch (NullPointerException e) {
+        } catch (
+                NullPointerException e) {
             System.out.println("Tento predmet v danej lokalite neexistuje. ");
         }
     }
 
+
     //ošetriť + vykreslenie
-    public IPredmet vyberZRuksaku(IPredmet predmet){
+    public IPredmet vyberZRuksaku(IPredmet predmet) {
         for (IPredmet iPredmet : this.predmety.values()) {
             if (predmet != null) {
                 this.predmety.remove(predmet);
                 this.postava.getAktualnaLokalita().vlozPredmetDoLokality(predmet);
                 return iPredmet;
             }
-        } return null;
+        }
+        return null;
     }
 
     public void vypisVsetkyPredmetyVRuksaku() {
@@ -75,7 +80,8 @@ public class Ruksak {
         for (String s : this.predmety.keySet()) {
             System.out.println("Predmety, ktoré máš aktuálne v ruksaku: " + s.toString());
 
-        } return this.predmety;
+        }
+        return this.predmety;
     }
 
     public boolean jePlny(IPredmet predmet) {

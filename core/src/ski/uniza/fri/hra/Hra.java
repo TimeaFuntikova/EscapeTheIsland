@@ -54,20 +54,19 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         this.batch = new SpriteBatch();
         this.generatorPredmetov = new GeneratorPredmetov();
         this.generatorLokalit = new GeneratorLokalit(this.generatorPredmetov);
-        this.lokalita = new Lokalita(this.generatorLokalit);
+        this.lokalita = new Lokalita(this.generatorLokalit); //vytvori sa lokalita bez nazvu
         this.ovladanie = new Ovladanie();
         //treba najskor zavolat vytvorenie lokalit inak generator predmetov pracuje s prázdnou inštanciou
-        this.generatorLokalit.vytvorLokality(); // vytvori prazdne konkretne lokality + //vytvori sa lokalita bez nazvu
-        this.postava = new Postava( this.lokalita, this.vykreslovacPredmetov, this.batch); //postava bez aktualnej lokality ale schopna sa neskor vykreslit
+        this.generatorLokalit.vytvorLokality(); // vytvori prazdne konkretne lokality
+
+        this.postava = new Postava(this.lokalita, this.vykreslovacPredmetov, this.batch); //postava bez aktualnej lokality ale schopna sa neskor vykreslit
         this.generatorPredmetov.initGeneratorPredmetov(this.vykreslovacPredmetov, this.generatorLokalit, this.postava);
         this.generatorLokalit.nastavAktualnuLokalitu(this.lokalita.hladajLokalitu("plaz")); //za aktualnu sa na zaciatok nastavi v tejto triede plaz
-        this.generatorLokalit.naplnLokality(this.vykreslovacPredmetov); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia. // iba ta aktualna
-        //this.generatorLokalit.nastavAktualnuLokalitu(this.lokalita.hladajLokalitu("plaz"));
         this.postava.getAktualnaLokalita();  //pláž
+        this.generatorPredmetov.naplnLokality(this.vykreslovacPredmetov); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia. // iba ta aktualna
         this.ovladanie = new Ovladanie(this.postava, this.batch, this.vykreslovacPredmetov, this.generatorLokalit, this.vykreslovacPozadiLokalit);
         this.postava.aktualizujOvladanie(this.ovladanie);
-
-        //this.hlavneMenu = new HlavneMenu(this); // --- po kliknutí na ok by sa okno mohlo minimalizoivať.
+        this.hlavneMenu = new HlavneMenu(this); // --- po kliknutí na ok by sa okno mohlo minimalizoivať.
 
     }
 
@@ -88,7 +87,6 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             System.exit(0);
         }
-
         this.font.draw(this.batch, "Predmety v ruksaku: " + this.postava.dajPredmetyVRuksaku(), 10,Gdx.graphics.getHeight() - 20);
         batch.end();
     }
@@ -111,8 +109,6 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
     }
 
 }
-
-
 
 /**
  * (Hra) Getter na pomocníka.
