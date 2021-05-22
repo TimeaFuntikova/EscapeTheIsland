@@ -69,7 +69,7 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
 
         this.generatorPredmetov.naplnLokality(this.vykreslovacPredmetov); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia. // iba ta aktualna
         this.postava.aktualizujOvladanie(this.ovladanie);
-        //this.hlavneMenu = new HlavneMenu(this); // --- po kliknutí na ok by sa okno mohlo minimalizoivať.
+        this.hlavneMenu = new HlavneMenu(this); // --- po kliknutí na ok by sa okno mohlo minimalizoivať.
 
 
     }
@@ -93,7 +93,8 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             System.exit(0);
         }
-        this.font.draw(this.batch, "Predmety v ruksaku: " + this.postava.dajPredmetyVRuksaku().keySet(), 10, Gdx.graphics.getHeight() - 20);//
+        this.font.draw(this.batch, this.postava.vypisEnergiu(), 10,Gdx.graphics.getHeight() - 20);
+        this.font.draw(this.batch, "Predmety v ruksaku: " + this.postava.dajPredmetyVRuksaku().keySet(), 10, Gdx.graphics.getHeight() - 40);
         batch.end();
     }
 
@@ -107,12 +108,6 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
      *
      * @param hraZacala
      */
-    public void setHraZacala(boolean hraZacala) {
-        this.hraZacala = hraZacala;
-    }
 
-    public boolean isHraZacala() {
-        return hraZacala;
-    }
 
 }

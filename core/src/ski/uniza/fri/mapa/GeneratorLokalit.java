@@ -95,13 +95,6 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
      * (GeneratorLokalit) predmety na vykreslenie
      */
     public HashMap<String, IPredmet> dajPredmetyNaVykreslenie() {
-        IPredmet vymaz = null;
-        for (IPredmet predmet : this.generatorPredmetov.getPredmetyNaVykreslenie().values()) {
-            if (predmet.nastalaKolizia() && !predmet.daSaPouzit()) {
-                predmet = vymaz;
-            }
-        }
-        this.generatorPredmetov.getPredmetyNaVykreslenie().remove(vymaz.dajNazov(), vymaz);
         return generatorPredmetov.getPredmetyNaVykreslenie();
     }
 
@@ -170,6 +163,13 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
     }
 
     public void naplnovacPosunuty() {
+            HashMap<String, IPredmet> vymazMaBitch = new HashMap<>();
+
+            for (IPredmet predmet : this.predmetyNaVykreslenie.values()) {
+                if (predmet.nastalaKolizia() && !predmet.daSaPouzit()) {
+                    vymazMaBitch.put(predmet.dajNazov(), predmet);
+                }
+        } this.predmetyNaVykreslenie.remove(vymazMaBitch);
         this.generatorPredmetov.naplnovac();
     }
 

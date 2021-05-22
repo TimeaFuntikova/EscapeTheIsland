@@ -94,7 +94,7 @@ public class Lokalita implements IMapa {
      * @return
      */
     @Override
-    public void  vezmiPredmet(IPredmet predmet) {
+    public void vezmiPredmet(IPredmet predmet) {
         this.predmetyVLokalite.remove(predmet.dajNazov(), predmet);
     }
 
@@ -108,7 +108,6 @@ public class Lokalita implements IMapa {
         if (predmet != null) {
             this.getPredmetyVLokalite().put(predmet.dajNazov(), predmet);
         }
-        //mal by sa nakresliť na pozíciu hráča. Lokalita pozná hrača a aj vykreslovač?
     }
 
     /**

@@ -55,7 +55,7 @@ public class Kokos extends Jedlo {
 
     @Override
     public boolean daSaPouzit() {
-        return super.daSaPouzit();
+        return true;
     }
 
     @Override

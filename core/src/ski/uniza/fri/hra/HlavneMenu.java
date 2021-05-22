@@ -1,9 +1,5 @@
 package ski.uniza.fri.hra;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import ski.uniza.fri.mapa.GeneratorLokalit;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,32 +10,28 @@ import java.awt.event.ActionListener;
 public class HlavneMenu extends JFrame implements ActionListener {
 
     private final Hra hra;
-    private final int width = 300; // okamžitá inicializácia
+    private final int width = 300;
     private final int height = 100;
 
-    private GeneratorLokalit generatorLokalit;
-    private Texture plazTexture;
 
     /**
      * (HlavneMenu) Vytvorenie inštanciií buttonov. Nastavenie layoutu na CardLayout.
      */
     JButton play = new JButton("play");
-    JButton settings = new JButton("settings");
     JButton exit = new JButton("exit");
-    //JButton mainMenu = new JButton("main menu");
 
     CardLayout layout = new CardLayout();
 
     JPanel okno = new JPanel();
     JPanel menu = new JPanel();
-    private SpriteBatch batch;
 
     public HlavneMenu(Hra hra) {
         this.hra = hra;
 
-        this.okno.setLayout(layout);
+       this.okno.setLayout(layout);
         this.layout.addLayoutComponent(okno, "Menu");
-        this.addButtons();
+
+        this.pridajButtony();
 
         setSize(width, height);
         setResizable(false);
@@ -50,10 +42,8 @@ public class HlavneMenu extends JFrame implements ActionListener {
         requestFocus();
     }
 
-    private void addButtons() {
-        //menu buttons
+    private void pridajButtony() {
         this.menu.add(this.play);
-        this.menu.add(this.settings);
         this.menu.add(this.exit);
 
         //background colors
@@ -61,12 +51,8 @@ public class HlavneMenu extends JFrame implements ActionListener {
 
         //nastavenie listenerov :
         this.play.addActionListener(this);
-        this.settings.addActionListener(this);
         this.exit.addActionListener(this);
-        //mainMenu.addActionListener(this);
-
-        //adding children to parent Panel
-        this.okno.add(this.menu, "Menu");
+       // this.okno.add(this.menu, "Menu");
 
         add(this.okno);
         layout.show(okno, "Menu");
@@ -80,24 +66,16 @@ public class HlavneMenu extends JFrame implements ActionListener {
         if (source == exit) {
             System.exit(0);
         } else if (source == play) {
-            //layout.show(panel, "Game");
             JOptionPane.showInternalMessageDialog(null, "Hra sa začala.");
             this.zacniHrat();
-        } else if (source == settings) {
         }
 
     }
 
     // treba vyriesit aby sa zmenial textura po zacati hry na plaz
     public void zacniHrat() {
-        if (this.hra.isHraZacala()) {
-            //Gdx.input.isKeyPressed(Input.Keys.ENTER);
-            System.out.println("hra zacala.");
-            this.hra.setHraZacala(false);
 
-            plazTexture = new Texture("plaz.png");
-            plazTexture.dispose();
-        }
+        System.out.println("hra zacala.");
     }
 
 }

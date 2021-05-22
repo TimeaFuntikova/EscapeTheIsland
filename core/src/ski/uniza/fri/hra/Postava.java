@@ -28,11 +28,7 @@ public class Postava {
     private int y;
 
     public int getSkore() {
-        return skore;
-    }
-
-    public void setSkore(int skore) {
-        this.skore = skore;
+        return this.skore;
     }
 
     private int skore;
@@ -45,25 +41,8 @@ public class Postava {
     private VykreslovacPredmetov vykreslovacPredmetov;
 
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
     /**
-     * (Postava) Getteer na aktálnu lokaltu, v ktorej je hráč, vypýta si to od Lokality, ktorej to posunie generator lokalit.
-     *
-     * @return
-     */
-    public Lokalita getAktualnaLokalita() {
-        return this.lokalita.dajLokalituHraca();
-    }
-
-    /**
-     * (Postava) Konštruktor, ktorý si v sebe inicializuje parametre.
+     * (Postava) Konštruktor triedy Postava, inicializuje paramatre, textúru a nastaví hráčovi začiatočnú pozíciu.
      *
      * @param vykreslovacPredmetov
      * @param batch
@@ -79,8 +58,41 @@ public class Postava {
 
     }
 
+    //------------------------------
+    // Gettre a settre pre Postavu
+    //------------------------------
+
+    public Lokalita getAktualnaLokalita() {
+        return this.lokalita.dajLokalituHraca();
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setSkore(int skore) {
+        this.skore = skore;
+    }
+
     public void dajPostaveRuksak() {
         this.ruksak = new Ruksak(this);
+    }
+
+    public HashMap<String, IPredmet> dajPredmetyVRuksaku() {
+        System.out.println(this.ruksak.dajZoznamPredmetovVRuksaku().keySet());
+        return this.ruksak.dajZoznamPredmetovVRuksaku();
     }
 
     /**
@@ -102,28 +114,6 @@ public class Postava {
     public void nastavPoziciuHraca(int x, int y) {
         this.x = x;
         this.y = y;
-    }
-
-    public void dajPoziciuPostavy() {
-        System.out.println("Pozicia X: " + this.x + " Pozícia Y: " + this.y);
-    }
-
-    /**
-     * (Postava) Getter na y-ovú súradnicu.
-     *
-     * @return y
-     */
-    public int getY() {
-        return this.y;
-    }
-
-    /**
-     * (Postava) Getter na x-ovú súradnicu.
-     *
-     * @return x
-     */
-    public int getX() {
-        return this.x;
     }
 
     /**
@@ -158,8 +148,9 @@ public class Postava {
     /**
      * (Postava) Vypíše na consolu energiu ..... nepotrebne af -----vypis cez font hre ako fpska
      */
-    public void vypisEnergiu() {
-        System.out.println("Aktuálna energia hráča: " + this.energy + "a jeho aktuálne skóre: " + this.skore);
+    public String vypisEnergiu() {
+        String s = "Energia : " + this.energy + " . Skóre : " + this.skore;
+        return s;
     }
 
     //nedorobené!
@@ -227,16 +218,12 @@ public class Postava {
     }
 
     public void pridajDoRuksaka(IPredmet predmet) {
-        this.getAktualnaLokalita().vezmiPredmet(predmet); ///tuto sa pozriet ci tam nie su veci zbytovned navyse
+        this.getAktualnaLokalita().vezmiPredmet(predmet);
         this.ruksak.pridajDoRuksaku(predmet);
+       // this.setSkore(this.skore + 10);
+
     }
 
-
-
-   public HashMap<String, IPredmet> dajPredmetyVRuksaku() {
-       System.out.println(this.ruksak.dajZoznamPredmetovVRuksaku().keySet());
-       return this.ruksak.dajZoznamPredmetovVRuksaku();
-   }
 
     //skladanie lode
 }

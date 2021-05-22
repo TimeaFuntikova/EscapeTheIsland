@@ -11,20 +11,17 @@ import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 import java.util.HashMap;
 
 public class GeneratorPredmetov {
+
+    //----------------------------------------
+    // Atribúty pre triedu GeneratorPredmetov
+    //----------------------------------------
+
+
     private Postava postava;
-
-    public HashMap<String, IPredmet> getPredmetyNaVykreslenie() {
-        return predmetyNaVykreslenie;
-    }
-
     private HashMap<String, IPredmet> predmetyNaVykreslenie = new HashMap<>();
     private VykreslovacPredmetov vykreslovac;
     private GeneratorLokalit generatorLokalit;
     private boolean jeVRuksaku = false;
-
-
-    //predmety: je potrebne mat atributy aby sa dalo jednotlive objekty odoberať resp.pridavať do ruksaku
-    //mozno to poriesit ako boolen: je VRuksaku - nevykreslí sa znova.
     private Kokos kokosPlazovy1;
     private Kokos kokosPlazovy2;
     private Kokos kokosPlazovy3;
@@ -38,6 +35,15 @@ public class GeneratorPredmetov {
     private Drevo patyk3;
     private Drevo drevoLietadlo;
 
+
+
+    public boolean isJeVRuksaku() {
+        return jeVRuksaku;
+    }
+
+    public void setJeVRuksaku(boolean jeVRuksaku) {
+        this.jeVRuksaku = jeVRuksaku;
+    }
     /**
      * (GeneratorPredmetov) Parametricky konstruktor triedy GeneratorPredmetov
      *
@@ -45,8 +51,6 @@ public class GeneratorPredmetov {
      * @param generatorLokalit
      * @param postava
      */
-
-
     public void initGeneratorPredmetov(VykreslovacPredmetov vykreslovac, GeneratorLokalit generatorLokalit, Postava postava) {
         this.vykreslovac = vykreslovac;
         this.generatorLokalit = generatorLokalit;
@@ -57,6 +61,11 @@ public class GeneratorPredmetov {
      * (GeneratorPredmetov) Bezaparametrický konštruktor triedy GeneratorPredmetov.
      */
     public GeneratorPredmetov() {
+    }
+
+
+    public HashMap<String, IPredmet> getPredmetyNaVykreslenie() {
+        return predmetyNaVykreslenie;
     }
 
     /**
@@ -99,11 +108,13 @@ public class GeneratorPredmetov {
     }
 
     private void mazacPredmetov() { //vymaže zoznam predmetov na vykreslovanie
+
         for (IPredmet predmet : this.predmetyNaVykreslenie.values()) {
             if (predmet.daSaPouzit()) {
                 predmet.daSaPouzit(false);
             }
-        }
+        }  // toto niečo robiiii
+
         predmetyNaVykreslenie.clear();
     }
 
@@ -133,14 +144,18 @@ public class GeneratorPredmetov {
         }
     }
 
-
     /**
      * (GeneratorPredmetov) Vezme si zoznam predpripravených predmetov na vykreslenie do lokality.
      *
      * @return
      */
     public void inicializujZoznam() { //mal by sa volat ked sa zmeni lokalita
-        this.predmetyNaVykreslenie = this.generatorLokalit.dajPredmetyNaVykreslenie();
+       HashMap<String, IPredmet> vymazMa = new HashMap<>();
+        for (IPredmet predmet : this.getPredmetyNaVykreslenie().values()) {
+            if (predmet.nastalaKolizia() && !predmet.daSaPouzit()) {
+                vymazMa.put(predmet.dajNazov(), predmet);
+            }
+        }  this.predmetyNaVykreslenie.remove(vymazMa.keySet(), vymazMa.values());
     }
 
     /**

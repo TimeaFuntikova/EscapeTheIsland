@@ -72,7 +72,6 @@ public abstract class Predmet implements IPredmet {
 
     @Override
     public void nastalaKolizia(boolean nastalaKolizia) {
-        this.bolPouzity = nastalaKolizia;
     }
 
 

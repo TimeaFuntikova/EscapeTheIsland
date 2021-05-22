@@ -34,16 +34,12 @@ public class Ovladanie implements IOvladanie {
     private Sprite[] sprites;
     private VykreslovacPredmetov vykreslovacPredmetov;
     private boolean hybeSa = false;
-    private boolean hybeSaDole = false;
-    private boolean hybeSaHore = false;
-    private boolean hybeSaVpravo = false;
-    private boolean hybeSaVlavo = false;
 
     private boolean hitVpravo = false;
     private boolean hitVlavo = false;
     private boolean hitHore = false;
     private boolean hitDole = false;
-    private int spriteIndex;
+    private int spriteIndex = 0;
 
     /**
      * (Ovladanie) Končtruktor triedy, kde sa inicializujú dané parametre.
@@ -61,7 +57,6 @@ public class Ovladanie implements IOvladanie {
         this.generatorLokalit = generatorLokalit;
         this.vykreslovacPozadiLokalit = vykreslovacPozadiLokalit;
         this.sprites = this.vykreslovacPredmetov.getPlayerMovingDown();
-        this.spriteIndex = 0;
     }
 
     /**
@@ -98,7 +93,6 @@ public class Ovladanie implements IOvladanie {
         }
     }
 
-    //nefunguje zmena lokalit
     private void nastavPohnutieDoprava() {
         if (!this.hybeSa && (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))) {
             // Gdx.input.setInputProcessor(new InputAdapter() {});
@@ -162,7 +156,7 @@ public class Ovladanie implements IOvladanie {
 
     private void zmenaNaVykreslenieAVypis() {
         this.generatorLokalit.vykresliPozadieLokality(this.vykreslovacPozadiLokalit, this.batch);
-        this.generatorLokalit.naplnovacPosunuty();
+        this.generatorLokalit.naplnovacPosunuty(); // tu čosi
         vypisAktualnejLokality();
     }
 

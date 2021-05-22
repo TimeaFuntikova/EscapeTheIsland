@@ -37,14 +37,14 @@ public class Ruksak {
      *
      * @param predmet
      */
-    public void pridajDoRuksaku(IPredmet predmet) {
+    public void pridajDoRuksaku(IPredmet predmet) { //urobí sa toto len raz...
         try {
             //pridaj predmet do kontajnera.
             //navys pocet predmetov v kontajneri o 1
             //osetri ak je kontajner plny --> hashmap alebo arrazlist, pole radšej nie
             //hashmap lebo chcem pri vpise na herne okno Stringovu reprezentu
+
             if (predmet != null) {
-                this.postava.setSkore(10);
                 this.predmetyVRuksaku.put(predmet.dajNazov(), predmet);
                 aktualnyPocetPredmetovVRuksaku++;
                 System.out.println("------som pridal do ruksakuuu-------");
@@ -71,16 +71,6 @@ public class Ruksak {
         return null;
     }
  */
- /*
-    public String dajPredmetyVRuksaku() {
-        for (String s : this.predmetyVRuksaku.keySet()) {
-            System.out.println("Predmety, ktoré máš aktuálne v ruksaku: " + s);
-            return s;
-        }
-        return null;
-    }
-
-  */
 
     public HashMap<String, IPredmet> dajZoznamPredmetovVRuksaku() {
         return this.predmetyVRuksaku;
