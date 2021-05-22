@@ -83,16 +83,7 @@ public class HlavneMenu extends JFrame implements ActionListener {
             //layout.show(panel, "Game");
             JOptionPane.showInternalMessageDialog(null, "Hra sa začala.");
             this.zacniHrat();
-
-
-            //tu pokračuj v hre:
-            //nastav hráča do miestnosti
-
         } else if (source == settings) {
-
-       /* } else if (source == mainMenu) {
-            layout.show(panel, "Menu");
-        */
         }
 
     }

@@ -11,11 +11,16 @@ import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 import java.util.HashMap;
 
 public class GeneratorPredmetov {
-
     private Postava postava;
+
+    public HashMap<String, IPredmet> getPredmetyNaVykreslenie() {
+        return predmetyNaVykreslenie;
+    }
+
     private HashMap<String, IPredmet> predmetyNaVykreslenie = new HashMap<>();
     private VykreslovacPredmetov vykreslovac;
     private GeneratorLokalit generatorLokalit;
+    private boolean jeVRuksaku = false;
 
 
     //predmety: je potrebne mat atributy aby sa dalo jednotlive objekty odoberať resp.pridavať do ruksaku
@@ -31,6 +36,7 @@ public class GeneratorPredmetov {
     private Drevo drevoCesta1;
     private Drevo drevoCesta2;
     private Drevo patyk3;
+    private Drevo drevoLietadlo;
 
     /**
      * (GeneratorPredmetov) Parametricky konstruktor triedy GeneratorPredmetov
@@ -62,6 +68,7 @@ public class GeneratorPredmetov {
         //naplnenie lokalit predmetmmi v nich
 
         this.nastavovacPredmetov();
+        this.naplnovac();
         this.generatorLokalit.getPlaz().naplnMiestnost(this.kokosPlazovy1);
         this.generatorLokalit.getPlaz().naplnMiestnost(this.kokosPlazovy2);
         this.generatorLokalit.getPlaz().naplnMiestnost(this.kokosPlazovy3);
@@ -73,13 +80,11 @@ public class GeneratorPredmetov {
         this.generatorLokalit.getCesta().naplnMiestnost(this.drevoCesta2);
         this.generatorLokalit.getCesta().naplnMiestnost(this.patyk3);
         this.generatorLokalit.getUtes().naplnMiestnost(this.drevoUtes);
-
-        this.naplnovac();
     }
 
     public void nastavovacPredmetov() {
         //zapodmienkovať existuj. atributy aby sa do zoznamu na vykreslenie nedostalo null
-        this.kokosPlazovy1 = new Kokos(vykreslovac.getKokosTexture(), 800, 350, 10, 10, "Kokos1", 10);
+        this.kokosPlazovy1 = new Kokos(vykreslovac.getKokosTexture(), 800, 350, 10, 10, "Kokos1", 10);//vyška a šírka sú pri kokose prednastavene na 50px
         this.kokosPlazovy2 = new Kokos(vykreslovac.getKokosTexture(), 740, 290, 10, 10, "Kokos2", 10);
         this.kokosPlazovy3 = new Kokos(vykreslovac.getKokosTexture(), 640, 250, 10, 10, "Kokos3", 10);
         this.drevoLesne1 = new Drevo(vykreslovac.getDrevoTexture(), 500, 100, 10, 10, "DrevoLesne1");
@@ -90,13 +95,19 @@ public class GeneratorPredmetov {
         this.drevoCesta1 = new Drevo(vykreslovac.getDrevoTexture(), 500, 200, 10, 10, "DrevoCesta1");
         this.drevoCesta2 = new Drevo(vykreslovac.getDrevoTexture(), 650, 300, 10, 10, "DrevoCesta2");
         this.patyk3 = new Drevo(vykreslovac.getPatykTexture(), 520, 420, 10, 10, "Patyk3");
+        this.drevoLietadlo = new Drevo(vykreslovac.getDrevoTexture(), 450, 80, 10, 10, "DrevoLietadlo");
     }
 
-    private void mazacPredmetov() {
-        predmetyNaVykreslenie.clear(); //posúvací zoznam keď sa vezmú veci na nakreslenie bude null.
+    private void mazacPredmetov() { //vymaže zoznam predmetov na vykreslovanie
+        for (IPredmet predmet : this.predmetyNaVykreslenie.values()) {
+            if (predmet.daSaPouzit()) {
+                predmet.daSaPouzit(false);
+            }
+        }
+        predmetyNaVykreslenie.clear();
     }
 
-    public void naplnovac() { //planovac domysliet null
+    public void naplnovac() {
         if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getPlaz()) {
             mazacPredmetov();
             this.predmetyNaVykreslenie.put("KokosPlazovy1", this.kokosPlazovy1);
@@ -118,51 +129,8 @@ public class GeneratorPredmetov {
             this.predmetyNaVykreslenie.put("Patyk2", this.drevoUtes);
         } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getLietadlo()) {
             mazacPredmetov();
-            this.predmetyNaVykreslenie.put("Patyk2", this.drevoUtes);
+            this.predmetyNaVykreslenie.put("DrevoLietadlo", this.drevoLietadlo);
         }
-        System.out.println("Nie su tu ziadne predmety na vykreslenie. lokalita uz nema v sebe ziadne predmety. ");
-    }
-
-
-    //lepšie a kratšie urobiť toto
-    public IPredmet kontrolaKolizii() {
-        //HashMap<Set<String>, IPredmet> predmetyNaPridanie = new HashMap<>(); // nech sa pridáva do ruksaka a zároveň nech znizne z vykreslovania lokalit
-        int PostavaX = this.postava.getX();
-        int PostavaY = this.postava.getY();
-        if (PostavaY == kokosPlazovy1.getY() + PostavaX) {
-            System.out.println("ZISTIL SOM KOLIIIIIIIIIIIZIUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-            this.postava.zoberPredmet(kokosPlazovy1);
-            return kokosPlazovy1;
-        } else if (PostavaY == kokosPlazovy2.getY()) {
-            System.out.println("ZISTIL SOM KOLIIIIIIIIIIIZIUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-            postava.zoberPredmet(kokosPlazovy2);
-            return kokosPlazovy2;
-        } else if (PostavaY == kokosPlazovy3.getY()) {
-            System.out.println("ZISTIL SOM KOLIIIIIIIIIIIZIUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-            postava.zoberPredmet(kokosPlazovy3);
-            return kokosPlazovy3;
-        } else if (PostavaX == drevoCesta1.getX()) {
-            System.out.println("ZISTIL SOM KOLIIIIIIIIIIIZIUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-            postava.zoberPredmet(drevoCesta1);
-            return drevoCesta1;
-        } else if (PostavaX == drevoCesta2.getX()) {
-            System.out.println("ZISTIL SOM KOLIIIIIIIIIIIZIUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-            postava.zoberPredmet(drevoCesta2);
-            return drevoCesta2;
-        } else if (PostavaY== drevoLesne1.getY()) {
-            System.out.println("ZISTIL SOM KOLIIIIIIIIIIIZIUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-            postava.zoberPredmet(drevoLesne1);
-            return drevoLesne1;
-        } else if (PostavaY == drevoLesne2.getY()) {
-            System.out.println("ZISTIL SOM KOLIIIIIIIIIIIZIUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-            postava.zoberPredmet(drevoLesne2);
-            return drevoLesne2;
-        } else if (PostavaX == drevoUtes.getX()) {
-            System.out.println("ZISTIL SOM KOLIIIIIIIIIIIZIUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-            postava.zoberPredmet(drevoUtes);
-            return drevoUtes;
-        }
-        return null;
     }
 
 
@@ -182,24 +150,27 @@ public class GeneratorPredmetov {
         inicializujZoznam();
     }
 
-
     /**
      * (GeneratorPredmetov) Prejde si kontajner pridaných predmetov a v cykle ich všetky predmety vykresli.
-     * Pozícia sa určí  na zaklade určenia v triede GeneratorLokalit
+     * Pozícia sa určí  na zaklade určenia v triede GeneratorLokalit.
+     * <p>
+     * Rozlišuje, či uz nastala s daným predmetom kolízia, ak nie, v cykle ho vykreslí do aktulanej lokality.
+     * Ak áno, nastaví predmetu atribúť, že sa viac "nedá použiť" čim ma zasitene pevne miesto v ruksaku a v lokalite sa nevykresli.
      *
      * @param batch
      */
     public void nakresliSa(SpriteBatch batch) {
-        this.pridaniePredmetov();
-        //this.predmetyNaVykreslenie.forEach((k, h) -> predmetyNaVykreslenie.draw(batch)); java8+
+        pridaniePredmetov();
         for (int i = 0; i < this.predmetyNaVykreslenie.size(); i++) {
             if (this.predmetyNaVykreslenie != null) {
                 for (IPredmet value : predmetyNaVykreslenie.values()) {
-                    value.draw(batch);
-                    continue;
+                    if (!value.nastalaKolizia() && value.daSaPouzit()) {
+                        value.draw(batch);
+                    } else{
+                        continue;
+                    }
                 }
             }
         }
     }
 }
-

@@ -49,14 +49,20 @@ public class Drevo extends Predmet {
         return true;
     }
 
+
     @Override
-    public boolean daSaPouzit() {
-        return true;
+    public boolean daSaPouzit(boolean daSaPouzit) {
+        return super.daSaPouzit(daSaPouzit);
     }
 
     @Override
-    public boolean bolPouzity() {
-        return super.bolPouzity();
+    public boolean daSaPouzit() {
+        return super.daSaPouzit();
+    }
+
+    @Override
+    public boolean nastalaKolizia() {
+        return super.nastalaKolizia();
     }
 
     @Override

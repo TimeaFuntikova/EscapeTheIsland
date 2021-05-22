@@ -31,6 +31,11 @@ public abstract class Vozidlo implements  IPredmet {
         super();
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     //getter na atribút názvu
 
     public String getNazov() {
@@ -42,6 +47,26 @@ public abstract class Vozidlo implements  IPredmet {
     //-----------------------------------
 
     @Override
+    public int getX() {
+        return 0;
+    }
+
+    @Override
+    public int getY() {
+        return 0;
+    }
+
+    @Override
+    public int getWidth() {
+        return 0;
+    }
+
+    @Override
+    public int getHeight() {
+        return 0;
+    }
+
+    @Override
     public String dajNazov() {
         return this.nazov;
     }
@@ -51,14 +76,23 @@ public abstract class Vozidlo implements  IPredmet {
         return false;
     }
 
+    public boolean daSaPouzit(boolean daSaPouzit) {
+        return true;
+    }
+
     @Override
     public boolean daSaPouzit() {
+        return true;
+    }
+
+    @Override
+    public boolean nastalaKolizia() {
         return false;
     }
 
     @Override
-    public boolean bolPouzity() {
-        return false;
+    public void nastalaKolizia(boolean nastalaKolizia) {
+
     }
 
     @Override

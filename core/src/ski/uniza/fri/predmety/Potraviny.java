@@ -81,13 +81,12 @@ public abstract class Potraviny implements  IPredmet {
         return false;
     }
 
-    @Override
-    public boolean daSaPouzit() {
-        return false;
+    public boolean daSaPouzit(boolean daSaPouzit) {
+        return true;
     }
 
     @Override
-    public boolean bolPouzity() {
+    public boolean nastalaKolizia() {
         return false;
     }
 

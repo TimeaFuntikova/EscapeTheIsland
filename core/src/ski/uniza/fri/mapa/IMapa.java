@@ -1,19 +1,19 @@
 package ski.uniza.fri.mapa;
 
-import ski.uniza.fri.hra.Postava;
 import ski.uniza.fri.predmety.IPredmet;
+import java.util.ArrayList;
 
 public interface IMapa {
 
     String dajNazovLokality();
 
-    String dajNazovPredmetuVLokalite();
+    ArrayList<String> dajPredmetyVLokalite();
 
     Lokalita dajLokalituHraca();
 
     Lokalita hladajLokalitu(String hladanaLokalita);
 
-    IPredmet vezmiPredmet(IPredmet predmet);
+    void vezmiPredmet(IPredmet predmet);
 
     void naplnMiestnost(IPredmet predmet);
 

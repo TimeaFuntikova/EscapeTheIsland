@@ -1,6 +1,8 @@
 package ski.uniza.fri.predmety;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import ski.uniza.fri.hra.Ruksak;
+import ski.uniza.fri.mapa.Lokalita;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 
 public abstract class Predmet implements IPredmet {
@@ -13,6 +15,7 @@ public abstract class Predmet implements IPredmet {
     private int width;
     private int height;
     private VykreslovacPredmetov vykreslovacPredmetov;
+    private boolean bolPouzity;
 
     /**
      * (Predmet) Parametrický konštruktor triedy Predmet na inicializáciu parametrov pozícií a vykreslovania
@@ -63,6 +66,16 @@ public abstract class Predmet implements IPredmet {
         this.height = height;
     }
 
+    public boolean isBolPouzity() {
+       return bolPouzity;
+    }
+
+    @Override
+    public void nastalaKolizia(boolean nastalaKolizia) {
+        this.bolPouzity = nastalaKolizia;
+    }
+
+
     //----------------------------------
     // Zdedené metódy z triedy IPredmet
     //----------------------------------
@@ -77,15 +90,20 @@ public abstract class Predmet implements IPredmet {
         return false;
     }
 
-    @Override
-    public boolean daSaPouzit() {
-        return false;
+    public boolean daSaPouzit(boolean daSaPouzit) {
+        return true;
     }
 
     @Override
-    public boolean bolPouzity() {
+    public boolean daSaPouzit() {
+        return true;
+    }
+
+    @Override
+    public boolean nastalaKolizia() {
         return false;
     }
+
 
     @Override
     public void vypisStavPredmetu() {

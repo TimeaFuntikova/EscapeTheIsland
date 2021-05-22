@@ -38,7 +38,7 @@ public class Naradie extends Kamen {
      * @return
      */
     @Override
-    public boolean daSaPouzit() {
+    public boolean daSaPouzit(boolean daSaPouzit) {
         if (this.opotrebenie <100 && this.opotrebenie >0) {
             this.opotrebenie += 5;
             return true;
@@ -47,8 +47,8 @@ public class Naradie extends Kamen {
     }
 
     @Override
-    public boolean bolPouzity() {
-        return super.bolPouzity();
+    public boolean nastalaKolizia() {
+        return super.nastalaKolizia();
     }
 
     @Override

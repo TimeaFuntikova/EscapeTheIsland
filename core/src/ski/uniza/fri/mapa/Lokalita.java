@@ -1,5 +1,7 @@
 package ski.uniza.fri.mapa;
 import ski.uniza.fri.predmety.IPredmet;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -35,6 +37,9 @@ public class Lokalita implements IMapa {
     public Lokalita(String nazov, GeneratorLokalit generatorLokalit) {
         this.nazovLokality = nazov;   //hasmapy sú inicializované pri deklaracii atributov;
         this.generatorLokalit = generatorLokalit;
+    }
+
+    public void initPredmetov() {
         this.predmetyVLokalite = this.generatorLokalit.dajPredmetyNaVykreslenie();
     }
 
@@ -89,8 +94,8 @@ public class Lokalita implements IMapa {
      * @return
      */
     @Override
-    public IPredmet vezmiPredmet(IPredmet predmet) {
-        return this.predmetyVLokalite.remove(predmet);
+    public void  vezmiPredmet(IPredmet predmet) {
+        this.predmetyVLokalite.remove(predmet.dajNazov(), predmet);
     }
 
     /**
@@ -101,7 +106,7 @@ public class Lokalita implements IMapa {
     @Override
     public void vlozPredmetDoLokality(IPredmet predmet) {
         if (predmet != null) {
-            this.predmetyVLokalite.put(predmet.dajNazov(), predmet);
+            this.getPredmetyVLokalite().put(predmet.dajNazov(), predmet);
         }
         //mal by sa nakresliť na pozíciu hráča. Lokalita pozná hrača a aj vykreslovač?
     }
@@ -116,19 +121,11 @@ public class Lokalita implements IMapa {
     }
 
     @Override
-    public String dajNazovPredmetuVLokalite() {
-        for (String s : predmetyVLokalite.keySet()) {
-            System.out.println(s);
-            return s = this.predmetyVLokalite.toString();
-        }
-        System.out.println("žiaden predmet v miestnosti nie je.");
-        return null;
-    }
-
-    public IPredmet dajPredmetyVLokalite() {
-        for (IPredmet predmet : predmetyVLokalite.values()) {
-            System.out.println(predmet);
-            return predmet;
+    public ArrayList<String> dajPredmetyVLokalite() {
+        ArrayList<String> predmetyVLokalite = new ArrayList<>();
+        for (String s : getPredmetyVLokalite().keySet()) {
+           predmetyVLokalite.add(s);
+            return predmetyVLokalite;
         } return null;
     }
 

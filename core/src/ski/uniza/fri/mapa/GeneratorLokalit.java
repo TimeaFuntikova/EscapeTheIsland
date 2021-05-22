@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ski.uniza.fri.predmety.IPredmet;
 import ski.uniza.fri.vykreslovace.VykreslovacPozadiLokalit;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
+
 import java.util.HashMap;
 
 /**
@@ -45,25 +46,35 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
     public Lokalita getPlaz() {
         return this.plaz;
     }
+
     public Lokalita getCesta() {
         return cesta;
     }
+
     public Lokalita getLes() {
         return les;
     }
+
     public Lokalita getVodopad() {
         return vodopad;
     }
+
     public Lokalita getLietadlo() {
         return lietadlo;
     }
-    public Lokalita getUtes() {return utes;}
+
+    public Lokalita getUtes() {
+        return utes;
+    }
+
     public Lokalita getJaskyna() {
         return jaskyna;
     }
+
     public Lokalita getMore() {
         return more;
     }
+
     public Lokalita getSopka() {
         return sopka;
     }
@@ -75,24 +86,28 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
 
     /**
      * (GeneratorLokalit) Vrati aktualnu lokalitu, v ktorej sa nachadza hrac.
-     *
      */
     public Lokalita getAktualnaLokalita() {
         return this.aktualnaLokalita;
     }
 
     /**
-     * (GeneratorLokalit) Arraylistpredmetov na vykreslenie.
-     *
+     * (GeneratorLokalit) predmety na vykreslenie
      */
     public HashMap<String, IPredmet> dajPredmetyNaVykreslenie() {
-        return predmetyNaVykreslenie;
+        IPredmet vymaz = null;
+        for (IPredmet predmet : this.generatorPredmetov.getPredmetyNaVykreslenie().values()) {
+            if (predmet.nastalaKolizia() && !predmet.daSaPouzit()) {
+                predmet = vymaz;
+            }
+        }
+        this.generatorPredmetov.getPredmetyNaVykreslenie().remove(vymaz.dajNazov(), vymaz);
+        return generatorPredmetov.getPredmetyNaVykreslenie();
     }
 
     /**
      * (GeneratorLokalit)) Metóda, ktorá vloží do zoznamu všetky lokality, ktoré exstujú. Slúži na to, aby sa z neho dala metódou určiť
      * aktuálna lokalita.
-     *
      */
     public void naplnZoznamLokalit() {
         this.vsetkyLokality.put(this.plaz.getNazovLokality(), this.plaz);
@@ -120,7 +135,6 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
         this.utes = new Lokalita("utes", this);
         this.more = new Lokalita("more", this);
         this.sopka = new Lokalita("sopka", this);
-
     }
 
     /**
@@ -159,9 +173,6 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
         this.generatorPredmetov.naplnovac();
     }
 
-    public void kontrolaKoliziiPosunuta() {
-        this.generatorPredmetov.kontrolaKolizii();
-    }
 
     //metoda na vyhodene predmety z ruksaku a odchyt predmetov:
 

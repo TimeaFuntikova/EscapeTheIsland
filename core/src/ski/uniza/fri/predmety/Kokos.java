@@ -15,7 +15,7 @@ public class Kokos extends Jedlo {
     //--------------------
     // Atribúty pre Kokos
     //--------------------
-
+    private String nazov;
     private Sprite kokosTexture;
 
     /**
@@ -32,6 +32,7 @@ public class Kokos extends Jedlo {
     public Kokos(Sprite kokosTexture, int x, int y, int width, int height, String nazov, int energy) {
         super(x, y, 50, 50, "Kokos", 50); // toto prioritne určuje kde sa vykreslí kokos.
         this.kokosTexture = kokosTexture;
+        this.nazov = nazov;
     }
 
     //-------------------------------
@@ -40,7 +41,7 @@ public class Kokos extends Jedlo {
 
     @Override
     public String dajNazov() {
-        return "kokos";
+        return this.nazov;
     }
 
     @Override
@@ -48,20 +49,30 @@ public class Kokos extends Jedlo {
         return false;
     }
 
-    @Override
-    public boolean daSaPouzit() {
-        return true;
+    public boolean daSaPouzit(boolean daSaPouzit) {
+        return super.daSaPouzit(daSaPouzit);
     }
 
     @Override
-    public boolean bolPouzity() {
-        return false;
+    public boolean daSaPouzit() {
+        return super.daSaPouzit();
+    }
+
+    @Override
+    public boolean nastalaKolizia() {
+        return super.nastalaKolizia();
+    }
+
+
+    @Override
+    public void nastalaKolizia(boolean nastalaKolizia) {
     }
 
 
     @Override
     public void vypisStavPredmetu() {
-        System.out.println("Kokos. Tvrdý.");
+        super.vypisStavPredmetu();
+        //System.out.println("Kokos. Tvrdý.");
     }
 
     @Override //chce FLOAAT!!

@@ -51,6 +51,16 @@ public class Lod extends Vozidlo {
     }
 
     @Override
+    public int getWidth() {
+        return 0;
+    }
+
+    @Override
+    public int getHeight() {
+        return 0;
+    }
+
+    @Override
     public String dajNazov() {
         return super.dajNazov();
     }
@@ -61,13 +71,18 @@ public class Lod extends Vozidlo {
     }
 
     @Override
-    public boolean daSaPouzit() {
+    public boolean daSaPouzit(boolean daSaPouzit) {
         return true;
     }
+    @Override
+    public boolean nastalaKolizia() {
+        return super.nastalaKolizia();
+    }
+
 
     @Override
-    public boolean bolPouzity() {
-        return super.bolPouzity();
+    public void nastalaKolizia(boolean nastalaKolizia) {
+
     }
 
     @Override

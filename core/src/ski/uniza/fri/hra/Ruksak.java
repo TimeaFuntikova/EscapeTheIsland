@@ -16,11 +16,11 @@ public class Ruksak {
     // Atribúty pre triedu Ruksak
     //----------------------------
 
-    private Ovladanie ovladanie;
     private Postava postava;
     private static final int KAPACITA = 10; // v ruksaku moze by t najviac 10 predmetov
     private int aktualnyPocetPredmetovVRuksaku = 0;
-    private HashMap<String, IPredmet> predmety = new HashMap<>();
+    private HashMap<String, IPredmet> predmetyVRuksaku = new HashMap<>();
+
 
     /**
      * (Ruksak) konštruktor triedy Ruksak.
@@ -29,7 +29,6 @@ public class Ruksak {
      */
     public Ruksak(Postava postava) {
         this.postava = postava;
-        this.postava.aktualizujOvladanie(this.ovladanie);
     }
 
     /**
@@ -38,25 +37,28 @@ public class Ruksak {
      *
      * @param predmet
      */
-    public void pridajDoRuksaku(IPredmet predmet) { // predmet is null
-        this.postava.getAktualnaLokalita().vezmiPredmet(predmet);
+    public void pridajDoRuksaku(IPredmet predmet) {
         try {
-            if (predmet.daSaPouzit()) {
-                this.predmety.put(predmet.dajNazov(), predmet);
+            //pridaj predmet do kontajnera.
+            //navys pocet predmetov v kontajneri o 1
+            //osetri ak je kontajner plny --> hashmap alebo arrazlist, pole radšej nie
+            //hashmap lebo chcem pri vpise na herne okno Stringovu reprezentu
+            if (predmet != null) {
+                this.postava.setSkore(10);
+                this.predmetyVRuksaku.put(predmet.dajNazov(), predmet);
                 aktualnyPocetPredmetovVRuksaku++;
                 System.out.println("------som pridal do ruksakuuu-------");
-            } else if (!jePlny(predmet)) {
+            } else if (jePlny()) {
                 System.out.println("Ruksak je plny. Nepodarilo sa pridať predmet.");
             } else {
                 System.out.println("Nedá sa použiť.");
             }
-        } catch (
-                NullPointerException e) {
+        } catch (NullPointerException e) { //toto by sa ikdy nemalo stať, inak by program padol už dávno predtým .
             System.out.println("Tento predmet v danej lokalite neexistuje. ");
         }
     }
 
-
+/*
     //ošetriť + vykreslenie
     public IPredmet vyberZRuksaku(IPredmet predmet) {
         for (IPredmet iPredmet : this.predmety.values()) {
@@ -68,29 +70,27 @@ public class Ruksak {
         }
         return null;
     }
-
-    public void vypisVsetkyPredmetyVRuksaku() {
-        for (String s : this.predmety.keySet()) {
+ */
+ /*
+    public String dajPredmetyVRuksaku() {
+        for (String s : this.predmetyVRuksaku.keySet()) {
             System.out.println("Predmety, ktoré máš aktuálne v ruksaku: " + s);
-
+            return s;
         }
+        return null;
     }
 
-    public HashMap<String, IPredmet> dajPredmetyVRuksakuObjektovo() {
-        for (String s : this.predmety.keySet()) {
-            System.out.println("Predmety, ktoré máš aktuálne v ruksaku: " + s.toString());
+  */
 
-        }
-        return this.predmety;
+    public HashMap<String, IPredmet> dajZoznamPredmetovVRuksaku() {
+        return this.predmetyVRuksaku;
     }
 
-    public boolean jePlny(IPredmet predmet) {
-        if (predmet != null) {
-            if (this.aktualnyPocetPredmetovVRuksaku < KAPACITA) {
-                this.aktualnyPocetPredmetovVRuksaku++;
-                System.out.println("Ešte nie je plný.");
-                return false;
-            }
+    public boolean jePlny() {
+        if (this.aktualnyPocetPredmetovVRuksaku < KAPACITA) {
+            this.aktualnyPocetPredmetovVRuksaku++;
+            System.out.println("Ešte nie je plný.");
+            return false;
         }
         System.out.println("Je plný.");
         return true;

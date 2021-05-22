@@ -78,12 +78,12 @@ public class Ovladanie implements IOvladanie {
         this.nastavPohnutieDole();
         this.nastavPohnutieDoprava();
         this.nastavPohnutieDolava();
-        this.generatorLokalit.kontrolaKoliziiPosunuta();
+        this.postava.nastalaKolizia();
     }
 
 
     private void nastavPohnutieDolava() {
-        if (!this.hybeSa && Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (!this.hybeSa && (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))) {
             this.hybeSa = true;
             if (this.postava.getX() - this.vykreslovacPredmetov.getPlayerTexture().getWidth() <= 0) {
                 this.hitVlavo = true;
@@ -100,7 +100,7 @@ public class Ovladanie implements IOvladanie {
 
     //nefunguje zmena lokalit
     private void nastavPohnutieDoprava() {
-        if (!this.hybeSa && Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (!this.hybeSa && (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))) {
             // Gdx.input.setInputProcessor(new InputAdapter() {});
             this.hybeSa = true;
             if (this.postava.getX() > Gdx.graphics.getWidth() - this.vykreslovacPredmetov.getPlayerTexture().getWidth()) {
@@ -119,7 +119,7 @@ public class Ovladanie implements IOvladanie {
 
     //implementovane pohyby ale nie vykreslene
     private void nastavPohnutieDole() {
-        if (!this.hybeSa && Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        if (!this.hybeSa && (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S))) {
             this.sprites = this.vykreslovacPredmetov.getPlayerMovingDown();
             this.hybeSa = true;
             if (this.postava.getY() - this.vykreslovacPredmetov.getPlayerTexture().getHeight() < 0) {
@@ -137,7 +137,7 @@ public class Ovladanie implements IOvladanie {
     }
 
     private void nastavPohnutieHore() {
-        if (!this.hybeSa && Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if (!this.hybeSa && (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W))) {
             this.hybeSa = true;
             if (this.postava.getY() > Gdx.graphics.getHeight() - this.vykreslovacPredmetov.getPlayerTexture().getHeight()) {
                 this.hitHore = true;

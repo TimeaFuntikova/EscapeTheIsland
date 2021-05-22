@@ -46,13 +46,23 @@ public class Voda extends Potraviny {
     }
 
     @Override
+    public boolean daSaPouzit(boolean daSaPouzit) {
+        return true;
+    }
+
+    @Override
     public boolean daSaPouzit() {
         return true;
     }
 
     @Override
-    public boolean bolPouzity() {
-        return super.bolPouzity();
+    public boolean nastalaKolizia() {
+        return super.nastalaKolizia();
+    }
+
+    @Override
+    public void nastalaKolizia(boolean nastalaKolizia) {
+
     }
 
     @Override

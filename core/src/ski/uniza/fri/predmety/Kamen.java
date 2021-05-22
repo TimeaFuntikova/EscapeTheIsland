@@ -28,6 +28,9 @@ public class Kamen extends Predmet {
     public boolean sluziNaOdplavenie() {
         return super.sluziNaOdplavenie();
     }
+    public boolean daSaPouzit(boolean daSaPouzit) {
+        return super.daSaPouzit(daSaPouzit);
+    }
 
     @Override
     public boolean daSaPouzit() {
@@ -35,9 +38,10 @@ public class Kamen extends Predmet {
     }
 
     @Override
-    public boolean bolPouzity() {
-        return super.bolPouzity();
+    public boolean nastalaKolizia() {
+        return super.nastalaKolizia();
     }
+
 
     @Override
     public void vypisStavPredmetu() {

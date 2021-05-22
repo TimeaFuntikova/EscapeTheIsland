@@ -7,6 +7,7 @@ import ski.uniza.fri.mapa.Lokalita;
 import ski.uniza.fri.predmety.IPredmet;
 import ski.uniza.fri.predmety.Potraviny;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
+
 import java.util.HashMap;
 
 /**
@@ -25,6 +26,15 @@ public class Postava {
     //pozicie
     private int x;
     private int y;
+
+    public int getSkore() {
+        return skore;
+    }
+
+    public void setSkore(int skore) {
+        this.skore = skore;
+    }
+
     private int skore;
     private int energy;
     private Ruksak ruksak;
@@ -38,6 +48,7 @@ public class Postava {
     public void setX(int x) {
         this.x = x;
     }
+
     public void setY(int y) {
         this.y = y;
     }
@@ -53,19 +64,23 @@ public class Postava {
 
     /**
      * (Postava) Konštruktor, ktorý si v sebe inicializuje parametre.
+     *
      * @param vykreslovacPredmetov
      * @param batch
      */
-    public Postava (Lokalita lokalita, VykreslovacPredmetov vykreslovacPredmetov, SpriteBatch batch) {
+    public Postava(Lokalita lokalita, VykreslovacPredmetov vykreslovacPredmetov, SpriteBatch batch) {
         this.lokalita = lokalita;
         this.skore = 0;
         this.energy = 100;
-        this.ruksak = new Ruksak(this);
         this.vykreslovacPredmetov = vykreslovacPredmetov;
         this.batch = batch;
         this.inicializujTexturu(this.postavaTexture);
         this.nastavPoziciuHraca((Gdx.graphics.getWidth() / 2), 0); //prvotne nastavenie pozicie hrača v novej miestnosti - zatial sa berie do úvahy len jedna
 
+    }
+
+    public void dajPostaveRuksak() {
+        this.ruksak = new Ruksak(this);
     }
 
     /**
@@ -150,18 +165,19 @@ public class Postava {
     //nedorobené!
 
 
-    public void zjedzPredmet(IPredmet predmet) {
+   /* public void zjedzPredmet(IPredmet predmet) {
         if (predmet instanceof Potraviny) {
-            predmet = this.lokalita.vezmiPredmet(predmet);
+            predmet = this.lokalita.vezmiPredmet();
             this.energy += ((Potraviny) predmet).getEnergy();
         } else {
             System.out.println("čosi s predmetom je zle. Bud sa neda zjest alebo nie je instanciou triedy potraviny a nevie dat energiu");
         }
     }
-
     public void vyberZRuksaku(IPredmet predmet) {
         this.ruksak.vyberZRuksaku(predmet);
     }
+
+ */
 
     /**
      * (Postava) Metódy na akciu postavy
@@ -186,28 +202,41 @@ public class Postava {
      *
      * @param predmet
      */
+    /*
     public void polozPredmet(IPredmet predmet) {
         this.ruksak.vyberZRuksaku(predmet);
         //vlozit ho do miestnosti a zaroven ho vymazat z ruksaka.
     }
+    */
 
     /**
      * (Postava) Zavola metodu z Ruksaku na vzatie predmetu do Ruksaku z miestnosti.
-     *
-     * @param
      */
-    public void zoberPredmet(IPredmet predmet) {
+
+    public boolean nastalaKolizia() {
+        for (IPredmet predmet : this.getAktualnaLokalita().getPredmetyVLokalite().values()) {
+            if ((this.x < predmet.getX() + predmet.getWidth() && this.x > predmet.getX() - predmet.getWidth())
+                    && (this.y > predmet.getY() - predmet.getHeight() && this.y < predmet.getY() + predmet.getHeight())) {
+                System.out.println("Detekoval som kolíziu.");// ak sa suradnice zhodli, do ruksaka sa prida predmet. pokracuje sa v metode pridaj do ruksaka.
+                predmet.nastalaKolizia(true);
+                predmet.daSaPouzit(false);
+                this.pridajDoRuksaka(predmet);
+                return true; //ak sa zhodujúc suradnice btw su urobene zle tak sa vrati true, inak false, znamena ze pri flase normalne s vsetko nakresli
+            }
+        } return false;
+    }
+
+    public void pridajDoRuksaka(IPredmet predmet) {
+        this.getAktualnaLokalita().vezmiPredmet(predmet); ///tuto sa pozriet ci tam nie su veci zbytovned navyse
         this.ruksak.pridajDoRuksaku(predmet);
-        this.lokalita.vezmiPredmet(predmet);
-        //vlozit ho do ruksaka a zaroven ho vymazat v miestnosti.
     }
 
 
-    public HashMap<String, IPredmet> dajPredmetyVRuksaku() {
-        System.out.println(this.ruksak.dajPredmetyVRuksakuObjektovo());
-       return this.ruksak.dajPredmetyVRuksakuObjektovo();
-    }
 
- //skladanie lode
+   public HashMap<String, IPredmet> dajPredmetyVRuksaku() {
+       System.out.println(this.ruksak.dajZoznamPredmetovVRuksaku().keySet());
+       return this.ruksak.dajZoznamPredmetovVRuksaku();
+   }
 
+    //skladanie lode
 }

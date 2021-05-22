@@ -57,16 +57,20 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         this.lokalita = new Lokalita(this.generatorLokalit); //vytvori sa lokalita bez nazvu
         this.ovladanie = new Ovladanie();
         //treba najskor zavolat vytvorenie lokalit inak generator predmetov pracuje s prázdnou inštanciou
-        this.generatorLokalit.vytvorLokality(); // vytvori prazdne konkretne lokality
 
+        this.generatorLokalit.vytvorLokality(); // vytvori prazdne konkretne lokality
         this.postava = new Postava(this.lokalita, this.vykreslovacPredmetov, this.batch); //postava bez aktualnej lokality ale schopna sa neskor vykreslit
         this.generatorPredmetov.initGeneratorPredmetov(this.vykreslovacPredmetov, this.generatorLokalit, this.postava);
+
+
         this.generatorLokalit.nastavAktualnuLokalitu(this.lokalita.hladajLokalitu("plaz")); //za aktualnu sa na zaciatok nastavi v tejto triede plaz
-        this.postava.getAktualnaLokalita();  //pláž
-        this.generatorPredmetov.naplnLokality(this.vykreslovacPredmetov); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia. // iba ta aktualna
+        this.postava.dajPostaveRuksak();
         this.ovladanie = new Ovladanie(this.postava, this.batch, this.vykreslovacPredmetov, this.generatorLokalit, this.vykreslovacPozadiLokalit);
+
+        this.generatorPredmetov.naplnLokality(this.vykreslovacPredmetov); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia. // iba ta aktualna
         this.postava.aktualizujOvladanie(this.ovladanie);
-        this.hlavneMenu = new HlavneMenu(this); // --- po kliknutí na ok by sa okno mohlo minimalizoivať.
+        //this.hlavneMenu = new HlavneMenu(this); // --- po kliknutí na ok by sa okno mohlo minimalizoivať.
+
 
     }
 
@@ -79,15 +83,17 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
+        this.lokalita.initPredmetov();
         this.generatorLokalit.vykresliPozadieLokality(this.vykreslovacPozadiLokalit, this.batch);
         this.postava.vykresliSaNaZaciatok(); // pre postavu
         this.generatorLokalit.vykresliSa(this.batch, this.vykreslovacPredmetov, this.generatorPredmetov);
+        this.postava.nastalaKolizia();
 
         //pomoc debug:
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             System.exit(0);
         }
-        this.font.draw(this.batch, "Predmety v ruksaku: " + this.postava.dajPredmetyVRuksaku(), 10,Gdx.graphics.getHeight() - 20);
+        this.font.draw(this.batch, "Predmety v ruksaku: " + this.postava.dajPredmetyVRuksaku().keySet(), 10, Gdx.graphics.getHeight() - 20);//
         batch.end();
     }
 
@@ -98,6 +104,7 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
 
     /**
      * (Hra) Settery využité v triede HlavneMenu
+     *
      * @param hraZacala
      */
     public void setHraZacala(boolean hraZacala) {
@@ -109,22 +116,3 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
     }
 
 }
-
-/**
- * (Hra) Getter na pomocníka.
- */
-
-
-/**
- * (Hra) Metóda na vytvorenie novej hry. Prepíš všetko, čo doteraz bolo uložené a spustí hru odznovu.
- */
-
-
-/**
- * (Hra) Metóda na pokračovanie v už uloženej hre. Načíta si z pamäte uloženú hru.
- */
-
-
-/**
- * (Hra) Pomocník pre hráča, slúži ako zoznam pravidiel a textovy úvod do samotnej hry.
- */
