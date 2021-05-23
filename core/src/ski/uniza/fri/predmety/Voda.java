@@ -46,8 +46,7 @@ public class Voda extends Potraviny {
     }
 
     @Override
-    public boolean daSaPouzit(boolean daSaPouzit) {
-        return true;
+    public void daSaPouzit(boolean daSaPouzit) {
     }
 
     @Override

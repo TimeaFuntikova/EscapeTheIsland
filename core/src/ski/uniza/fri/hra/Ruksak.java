@@ -19,7 +19,7 @@ public class Ruksak {
     //----------------------------
 
     private Postava postava;
-    private static final int KAPACITA = 10; // v ruksaku moze by t najviac 10 predmetov
+    private static final int KAPACITA = 10; // v ruksaku moze byt najviac 10 predmetov
     private int aktualnyPocetPredmetovVRuksaku = 0;
     private HashMap<String, IPredmet> predmetyVRuksaku = new HashMap<>();
 
@@ -43,13 +43,17 @@ public class Ruksak {
         try {
             //pridaj predmet do kontajnera.
             //navys pocet predmetov v kontajneri o 1
-            //osetri ak je kontajner plny --> hashmap alebo arrazlist, pole radšej nie
-            //hashmap lebo chcem pri vpise na herne okno Stringovu reprezentu
+            //osetri ak je kontajner plny --> hashmap
+            //hashmap lebo chcem pri vypise na herne okno Stringovu reprezentu
 
             if (predmet != null) {
                 this.predmetyVRuksaku.put(predmet.dajNazov(), predmet);
                 aktualnyPocetPredmetovVRuksaku++;
                 predmet.jeVRuksaku(true);
+                this.postava.setSkore(10);
+                if(predmet instanceof Kokos) {
+                    this.postava.setEnergy(10);
+                }
                 System.out.println("------som pridal do ruksakuuu-------");
             } else if (jePlny()) {
                 System.out.println("Ruksak je plny. Nepodarilo sa pridať predmet.");
@@ -76,7 +80,8 @@ public class Ruksak {
     }
 
     public boolean postavitLod() {
-        return dajZoznamPredmetovVRuksaku().values() instanceof Drevo; // hmmm
-
+        if (this.postava.getSkore() > 50 && dajZoznamPredmetovVRuksaku().containsValue(this.postava.dajPredmetyVRuksaku().get("drevoLesne"))) {
+            return true; // hmmm
+        } return false;
     }
 }

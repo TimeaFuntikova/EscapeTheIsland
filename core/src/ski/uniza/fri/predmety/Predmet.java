@@ -83,13 +83,12 @@ public abstract class Predmet implements IPredmet {
         return false;
     }
 
-    public boolean daSaPouzit(boolean daSaPouzit) {
-        return true;
+    public void daSaPouzit(boolean daSaPouzit) {
     }
 
     @Override
     public boolean daSaPouzit() {
-        return true;
+        return false;
     }
 
     @Override

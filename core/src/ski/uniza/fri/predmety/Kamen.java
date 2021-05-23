@@ -1,6 +1,5 @@
 package ski.uniza.fri.predmety;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -17,7 +16,7 @@ public class Kamen extends Predmet {
      * @param height
      */
     public Kamen(Sprite texturka, int x, int y, int width, int height, String nazov) {
-        super(x, y, 40, 40);
+        super(x, y, 35, 35);
         this.kamiencokyy = texturka;
         this.nazov = nazov;
     }
@@ -35,8 +34,8 @@ public class Kamen extends Predmet {
     public boolean sluziNaOdplavenie() {
         return super.sluziNaOdplavenie();
     }
-    public boolean daSaPouzit(boolean daSaPouzit) {
-        return super.daSaPouzit(daSaPouzit);
+    public void daSaPouzit(boolean daSaPouzit) {
+         super.daSaPouzit(daSaPouzit);
     }
 
     @Override
@@ -48,7 +47,6 @@ public class Kamen extends Predmet {
     public boolean nastalaKolizia() {
         return super.nastalaKolizia();
     }
-
 
     @Override
     public void vypisStavPredmetu() {

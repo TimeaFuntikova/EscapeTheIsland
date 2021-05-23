@@ -13,7 +13,7 @@ public interface IPredmet {
 
     boolean sluziNaOdplavenie();
 
-    boolean daSaPouzit(boolean daSaPouzit);
+    void daSaPouzit(boolean daSaPouzit);
 
     boolean daSaPouzit();
 

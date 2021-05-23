@@ -9,73 +9,57 @@ import java.awt.event.ActionListener;
 
 public class HlavneMenu extends JFrame implements ActionListener {
 
+    //--------------------------------
+    // Atribúty pre triedu HlavneMenu
+    //--------------------------------
+
     private final Hra hra;
     private final int width = 300;
     private final int height = 100;
-
+    private CardLayout layout = new CardLayout();
+    private  JButton play = new JButton("play");
+    private JButton exit = new JButton("exit");
+    private JPanel okno = new JPanel();
+    private JPanel menu = new JPanel();
 
     /**
      * (HlavneMenu) Vytvorenie inštanciií buttonov. Nastavenie layoutu na CardLayout.
      */
-    JButton play = new JButton("play");
-    JButton exit = new JButton("exit");
-
-    CardLayout layout = new CardLayout();
-
-    JPanel okno = new JPanel();
-    JPanel menu = new JPanel();
-
     public HlavneMenu(Hra hra) {
         this.hra = hra;
-
-       this.okno.setLayout(layout);
+        this.okno.setLayout(layout);
         this.layout.addLayoutComponent(okno, "Menu");
-
         this.pridajButtony();
-
-        setSize(width, height);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        setTitle("Escape The Island");
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        requestFocus();
+        this.setSize(width, height);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        this.setTitle("Escape The Island");
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.requestFocus();
     }
 
     private void pridajButtony() {
         this.menu.add(this.play);
         this.menu.add(this.exit);
-
-        //background colors
         this.menu.setBackground(new Color(24, 44, 18, 255));
 
         //nastavenie listenerov :
         this.play.addActionListener(this);
         this.exit.addActionListener(this);
-       // this.okno.add(this.menu, "Menu");
-
+        this.okno.add(this.menu, "Menu");
         add(this.okno);
         layout.show(okno, "Menu");
 
     }
 
     public void actionPerformed(ActionEvent event) {
-
         Object source = event.getSource();
-
         if (source == exit) {
             System.exit(0);
         } else if (source == play) {
-            JOptionPane.showInternalMessageDialog(null, "Hra sa začala.");
-            this.zacniHrat();
+            this.setVisible(false);
         }
-
-    }
-
-    // treba vyriesit aby sa zmenial textura po zacati hry na plaz
-    public void zacniHrat() {
-
-        System.out.println("hra zacala.");
     }
 
 }

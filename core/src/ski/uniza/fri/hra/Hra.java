@@ -14,8 +14,7 @@ import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 
 /**
  * Trieda Hra je kompozit všetkých tried v programe "Escape the Island".
- * Spúšťa sa v nej nová hra, ukončuje sa v nej rozohratá hra a rovnako poskytuje
- * pomocníka, ktorý hráčovi priblíži, čo má v hre vlastne robiť.
+ * Vytvára inštacie potrebné na začatiem priebeh a ukončenie hry.
  *
  * @author Timea Funtíková
  * @version 1.0 (4.4.2021)
@@ -26,7 +25,6 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
     // Atribúty pre triedu Hra
     //--------------------------
 
-    //cas
     private boolean hraZacala = false;
     private Postava postava;
     private GeneratorLokalit generatorLokalit;
@@ -39,12 +37,9 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
     private Ovladanie ovladanie;
     private BitmapFont font;
 
-    //private Ruksacik ruksacik;
-    // private Pomocnik pomocnik;
-
     /**
      * (Hra) Metóda na vytvorenie novej hry. Prepíš všetko, čo doteraz bolo uložené a spustí hru odznovu.
-     * Metóda by mohla rozlišovať medzi novou hrou a pokračovaním v hre.
+     *
      */
     @Override
     public void create() {
@@ -54,23 +49,22 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         this.batch = new SpriteBatch();
         this.generatorPredmetov = new GeneratorPredmetov();
         this.generatorLokalit = new GeneratorLokalit(this.generatorPredmetov);
-        this.lokalita = new Lokalita(this.generatorLokalit); //vytvori sa lokalita bez nazvu
         this.ovladanie = new Ovladanie();
+        this.lokalita = new Lokalita(this.generatorLokalit); //vytvori sa lokalita bez nazvu
+        this.generatorLokalit.vytvorLokality(); // vytvori prazdne konkretne lokality
+        this.lokalita = new Lokalita(this.generatorLokalit); //vytvori sa lokalita bez nazvu
+        this.generatorLokalit.nastavAktualnuLokalitu(this.generatorLokalit.getLes()); //za aktualnu sa na zaciatok nastavi uvodna lokalita
+
         //treba najskor zavolat vytvorenie lokalit inak generator predmetov pracuje s prázdnou inštanciou
 
-        this.generatorLokalit.vytvorLokality(); // vytvori prazdne konkretne lokality
         this.postava = new Postava(this.lokalita, this.vykreslovacPredmetov, this.batch); //postava bez aktualnej lokality ale schopna sa neskor vykreslit
-        this.generatorPredmetov.initGeneratorPredmetov(this.vykreslovacPredmetov, this.generatorLokalit, this.postava);
+        this.generatorPredmetov.initGeneratorPredmetov(this.vykreslovacPredmetov, this.generatorLokalit, this.postava); //len init 3 parametrov
 
-
-        this.generatorLokalit.nastavAktualnuLokalitu(this.lokalita.hladajLokalitu("plaz")); //za aktualnu sa na zaciatok nastavi v tejto triede plaz
         this.postava.dajPostaveRuksak();
         this.ovladanie = new Ovladanie(this.postava, this.batch, this.vykreslovacPredmetov, this.generatorLokalit, this.vykreslovacPozadiLokalit);
-
-        this.generatorPredmetov.naplnLokality(); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia. // iba ta aktualna
+        this.generatorPredmetov.naplnLokality(); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia.
         this.postava.aktualizujOvladanie(this.ovladanie);
-        this.hlavneMenu = new HlavneMenu(this); // --- po kliknutí na ok by sa okno mohlo minimalizoivať.
-
+        //this.hlavneMenu = new HlavneMenu(this);
 
     }
 
@@ -83,7 +77,6 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        this.lokalita.initPredmetov();
         this.generatorLokalit.vykresliPozadieLokality(this.vykreslovacPozadiLokalit, this.batch);
         this.postava.vykresliSaNaZaciatok(); // pre postavu
         this.generatorLokalit.vykresliSa(this.batch, this.vykreslovacPredmetov, this.generatorPredmetov);
@@ -91,7 +84,8 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
 
         //pomoc debug:
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            System.exit(0);
+            this.hlavneMenu = new HlavneMenu(this); //ukaze sa menu pri odchode z hry.
+            //System.exit(0);
         }
         this.font.draw(this.batch, this.postava.vypisEnergiu(), 10,Gdx.graphics.getHeight() - 20);
         this.font.draw(this.batch, "Predmety v ruksaku: " + this.postava.dajPredmetyVRuksaku().keySet(), 10, Gdx.graphics.getHeight() - 40);
@@ -102,12 +96,5 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
     public void dispose() {
         batch.dispose();
     }
-
-    /**
-     * (Hra) Settery využité v triede HlavneMenu
-     *
-     * @param hraZacala
-     */
-
 
 }

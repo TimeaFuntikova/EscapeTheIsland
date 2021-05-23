@@ -8,8 +8,6 @@ public interface IMapa {
 
     Lokalita dajLokalituPostavy();
 
-    Lokalita hladajLokalitu(String hladanaLokalita);
-
     void vezmiPredmet(IPredmet predmet);
 
     void naplnMiestnost(IPredmet predmet);

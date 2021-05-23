@@ -45,13 +45,13 @@ public abstract class Jedlo extends Potraviny {
         return super.sluziNaOdplavenie();
     }
 
-    public boolean daSaPouzit(boolean daSaPouzit) {
-        return super.daSaPouzit(daSaPouzit);
+    public void daSaPouzit(boolean daSaPouzit) {
+        super.daSaPouzit(daSaPouzit);
     }
 
     @Override
     public boolean daSaPouzit() {
-        return true;
+        return super.daSaPouzit();
     }
 
     @Override

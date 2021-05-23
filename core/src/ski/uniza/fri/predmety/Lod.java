@@ -70,8 +70,7 @@ public class Lod extends Vozidlo {
     }
 
     @Override
-    public boolean daSaPouzit(boolean daSaPouzit) {
-        return true;
+    public void daSaPouzit(boolean daSaPouzit) {
     }
     @Override
     public boolean nastalaKolizia() {

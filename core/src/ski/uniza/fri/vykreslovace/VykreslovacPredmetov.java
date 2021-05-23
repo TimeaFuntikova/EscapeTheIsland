@@ -16,11 +16,6 @@ public class VykreslovacPredmetov extends ApplicationAdapter {
 
     public VykreslovacPredmetov() {}
 
-    /**
-     * ------------------------REFAKTORING TEXTURY HRACA ____________________________________
-     *
-     */
-
     public Sprite getPlayerTexture() {
         return new Sprite (new Sprite(this.texture = new Texture("postavaspredu1.png")));
     }
@@ -69,8 +64,6 @@ public class VykreslovacPredmetov extends ApplicationAdapter {
     public Sprite getLodTexture() {
         return new Sprite (new Sprite(this.texture = new Texture("lod.png")));
     }
-
-
 
     public void dispose() {
         this.texture.dispose();

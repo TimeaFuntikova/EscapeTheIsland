@@ -15,6 +15,7 @@ public class Kokos extends Jedlo {
     //--------------------
     // Atribúty pre Kokos
     //--------------------
+
     private String nazov;
     private Sprite kokosTexture;
 
@@ -49,8 +50,9 @@ public class Kokos extends Jedlo {
         return false;
     }
 
-    public boolean daSaPouzit(boolean daSaPouzit) {
-        return super.daSaPouzit(daSaPouzit);
+    @Override
+    public void daSaPouzit(boolean daSaPouzit) {
+        super.daSaPouzit(daSaPouzit);
     }
 
     @Override

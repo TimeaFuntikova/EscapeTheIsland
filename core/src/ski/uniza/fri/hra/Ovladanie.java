@@ -156,7 +156,8 @@ public class Ovladanie implements IOvladanie {
 
     private void zmenaNaVykreslenieAVypis() {
         this.generatorLokalit.vykresliPozadieLokality(this.vykreslovacPozadiLokalit, this.batch);
-        this.generatorLokalit.naplnovacPosunuty(); // tu čosi
+        this.generatorLokalit.naplnovacPosunuty();
+        this.postava.setEnergy(-10);
         vypisAktualnejLokality();
     }
 
@@ -169,6 +170,7 @@ public class Ovladanie implements IOvladanie {
     @Override
     public void zmenLokalitu(VykreslovacPozadiLokalit vykreslovacPozadiLokalit) {
         this.vykreslovacPozadiLokalit = vykreslovacPozadiLokalit;
+        this.postava.getAktualnaLokalita().initPredmetov();
 
         //ošetrenie plaže
         if (this.postava.getAktualnaLokalita().dajNazovLokality().equals("plaz") && this.hitVpravo) {

@@ -1,7 +1,5 @@
 package ski.uniza.fri.mapa;
 import ski.uniza.fri.predmety.IPredmet;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -13,12 +11,11 @@ import java.util.HashMap;
  */
 public class Lokalita implements IMapa {
 
-
     //------------------------------
     // Atribúty pre triedu Lokalita
     //------------------------------
 
-    private final String nazovLokality;
+    private String nazovLokality;
     private GeneratorLokalit generatorLokalit;
     private HashMap<String,IPredmet> predmetyVLokalite = new HashMap<>(); //pouziva sa?
 
@@ -56,7 +53,7 @@ public class Lokalita implements IMapa {
      * @return Hashmap
      */
     public HashMap<String, IPredmet> getPredmetyVLokalite() {
-        this.predmetyVLokalite = this.generatorLokalit.dajPredmetyNaVykreslenie();
+       // this.predmetyVLokalite = this.generatorLokalit.dajPredmetyNaVykreslenie();
         return predmetyVLokalite;
     }
 
@@ -65,18 +62,6 @@ public class Lokalita implements IMapa {
     // Metódy implementované z interface.
     //-----------------------------------
 
-    /**
-     * (Lokalita) Metóda ny vyhladanie lokality podla nazvu s návratovou hodnotou hladanej lokality
-     * @param hladanaLokalita
-     * @return
-     */
-    @Override
-    public Lokalita hladajLokalitu(String hladanaLokalita) {
-        if (this.generatorLokalit.getVsetkyLokality().containsKey(hladanaLokalita))
-        for (Lokalita lokalita : this.generatorLokalit.getVsetkyLokality().values()) { //opravene!
-            return lokalita;
-        } return null;
-    }
 
     /**
      * (Lokalita) Odvolá sa na generatorLokalit, ktorý vygeneruje novú lokalitu zo svojho zoznamu lokalít.
@@ -97,12 +82,6 @@ public class Lokalita implements IMapa {
     public void vezmiPredmet(IPredmet predmet) {
         this.predmetyVLokalite.remove(predmet.dajNazov(), predmet);
     }
-
-    /**
-     * (Lokalita) Prevezme si všetky predemety, ktoré existujú a podľa aktuálnej lokality ich zapíše do zoznamu predmetovVLokalite, aby sa
-     * následne dali vykresliť.
-     * @param predmet
-     */
 
     /**
      * (Lokalita) Vracia noazov lokality v stringovej reprezentacii.
@@ -130,5 +109,4 @@ public class Lokalita implements IMapa {
     public void naplnMiestnost(IPredmet predmet) {
         this.predmetyVLokalite.put(predmet.dajNazov(), predmet);
     }
-
 }

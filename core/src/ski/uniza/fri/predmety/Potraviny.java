@@ -12,6 +12,15 @@ public abstract class Potraviny implements  IPredmet {
     private int y;
     private int width;
     private int height;
+
+    public int getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(int energy) {
+        this.energy = energy;
+    }
+
     private int energy;
     private VykreslovacPredmetov vykreslovacPredmetov;
 
@@ -77,7 +86,11 @@ public abstract class Potraviny implements  IPredmet {
         return false;
     }
 
-    public boolean daSaPouzit(boolean daSaPouzit) {
+    public void daSaPouzit(boolean daSaPouzit) {
+    }
+
+    @Override
+    public boolean daSaPouzit() {
         return true;
     }
 
@@ -87,11 +100,21 @@ public abstract class Potraviny implements  IPredmet {
     }
 
     @Override
+    public void nastalaKolizia(boolean nastalaKolizia) {
+
+    }
+
+    @Override
     public void vypisStavPredmetu() {}
 
     @Override
     public void draw(SpriteBatch batch) {
 
+    }
+
+    @Override
+    public boolean jeVRuksaku(boolean trueFalse) {
+        return false;
     }
 
 }

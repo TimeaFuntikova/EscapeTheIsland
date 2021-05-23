@@ -5,12 +5,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ski.uniza.fri.mapa.Lokalita;
 import ski.uniza.fri.predmety.IPredmet;
+import ski.uniza.fri.predmety.Kokos;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 
 import java.util.HashMap;
 
 /**
- * Trieda Postava predstavuje virtuálnu postavu, ktorou je hŕač. Presúva na na rôzne lokality a môže zbierať predmety,
+ * Trieda Postava predstavuje virtuálnu postavu, ktorou je hŕač. Presúva sa na rôzne lokality a môže zbierať predmety,
  * vytvárať nové, ukladať ich do svojho batoha alebo ich vhodným spôsobom využiť vo svoj prospech na opustenie ostrova.
  *
  * @author Timea Funtíková
@@ -31,6 +32,14 @@ public class Postava {
     }
 
     private int skore;
+
+    public void setEnergy(int energy) {
+        this.energy += energy;
+    }
+    public void setSkore(int skore) {
+        this.skore += skore;
+    }
+
     private int energy;
     private Ruksak ruksak;
     private Ovladanie ovladanie;
@@ -81,9 +90,6 @@ public class Postava {
         this.y = y;
     }
 
-    public void setSkore(int skore) {
-        this.skore = skore;
-    }
 
     public void dajPostaveRuksak() {
         this.ruksak = new Ruksak(this);
@@ -172,18 +178,6 @@ public class Postava {
     }
 
     /**
-     * (Postava) Zavola metodu z Ruksaku na polozenie predmetu z ruksaku do miestnosti.
-     *
-     * @param predmet
-     */
-    /*
-    public void polozPredmet(IPredmet predmet) {
-        this.ruksak.vyberZRuksaku(predmet);
-        //vlozit ho do miestnosti a zaroven ho vymazat z ruksaka.
-    }
-    */
-
-    /**
      * (Postava) Zavola metodu z Ruksaku na vzatie predmetu do Ruksaku z miestnosti.
      */
 
@@ -193,17 +187,16 @@ public class Postava {
                     && (this.y > predmet.getY() - predmet.getHeight() && this.y < predmet.getY() + predmet.getHeight())) {
                 System.out.println("Detekoval som kolíziu.");// ak sa suradnice zhodli, do ruksaka sa prida predmet. pokracuje sa v metode pridaj do ruksaka.
                 predmet.nastalaKolizia(true);
-                predmet.daSaPouzit(false);
                 this.pridajDoRuksaka(predmet);
-                return true; //ak sa zhodujúc suradnice btw su urobene zle tak sa vrati true, inak false, znamena ze pri flase normalne s vsetko nakresli
+                return true;
             }
         } return false;
     }
 
     public void pridajDoRuksaka(IPredmet predmet) {
-        this.getAktualnaLokalita().vezmiPredmet(predmet);
+        this.getAktualnaLokalita().vezmiPredmet(predmet); //
         this.ruksak.pridajDoRuksaku(predmet);
-       // this.setSkore(this.skore + 10);
+        predmet.daSaPouzit(false);
 
     }
 

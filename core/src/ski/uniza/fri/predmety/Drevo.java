@@ -51,8 +51,8 @@ public class Drevo extends Predmet {
 
 
     @Override
-    public boolean daSaPouzit(boolean daSaPouzit) {
-        return super.daSaPouzit(daSaPouzit);
+    public void daSaPouzit(boolean daSaPouzit) {
+       super.daSaPouzit(daSaPouzit);
     }
 
     @Override
