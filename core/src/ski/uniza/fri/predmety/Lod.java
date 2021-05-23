@@ -1,5 +1,6 @@
 package ski.uniza.fri.predmety;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -16,14 +17,15 @@ public class Lod extends Vozidlo {
     //--------------------
     private String nazovVozidla;
     private String stav = "Misia bola úspešná.";
+    private Sprite texturaBoat;
 
     /**
      * (Lod) Parametrický konstruktor kde sa inicialitujú potrebné parametre na vykreslenie lode.
      * @param nazov
-     * @param nazovVozidla
      */
-    public Lod (String nazov, String nazovVozidla) {
-        super(nazov);
+    public Lod (Sprite texturkaLode, int x, int y, int width, int height, String nazov) {
+        super(x, y, 35,35);
+        this.texturaBoat = texturkaLode;
         this.nazovVozidla = nazovVozidla;
     }
 
@@ -36,9 +38,6 @@ public class Lod extends Vozidlo {
         return this.nazovVozidla;
     }
 
-    public Lod() {
-        super();
-    }
 
     @Override
     public int getX() {
@@ -95,5 +94,10 @@ public class Lod extends Vozidlo {
     public void draw(SpriteBatch batch) {
         super.draw(batch);
         //nakreslit lod a v hre dať použiť aby hra bola ukoncena
+    }
+
+    @Override
+    public boolean jeVRuksaku(boolean trueFalse) {
+        return false;
     }
 }

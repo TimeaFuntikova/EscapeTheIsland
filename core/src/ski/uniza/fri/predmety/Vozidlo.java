@@ -1,6 +1,7 @@
 package ski.uniza.fri.predmety;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 
 /**
  * Abstraktná trieda vozidlo slúži na posun informácii lodi, ktorá sa bude vykreslovať a dediť informácie z tejto triedy
@@ -8,36 +9,33 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * @author Timea Funtíková
  * @version 1.0 (19.5.2021)
  */
-public abstract class Vozidlo implements  IPredmet {
+public abstract class Vozidlo implements IPredmet {
 
-    //--------------------
-    // Atribúty pre Voda
-    //--------------------
+    //----------------------
+    // Atribúty pre Vozidlo
+    //----------------------
 
+    private int x;
+    private int y;
+    private int width;
+    private int height;
     private String nazov;
+    private VykreslovacPredmetov vykreslovacPredmetov;
+
 
     /**
      * (Vozidlo) Parametricky konstruktor triedy vozidlo, iniciazuje názov vozidla.
-     * @param nazov
+     *
      */
-    public Vozidlo(String nazov) {
-        this.nazov = nazov;
+    public Vozidlo(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.vykreslovacPredmetov = new VykreslovacPredmetov();
     }
 
-    /**
-     * (Vozidlo) Bezparametricky konstruktor triedy vozidlo
-     */
-    public Vozidlo() {
-        super();
-    }
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-
-    //getter na atribút názvu
-
+    //getter na atribút
     public String getNazov() {
         return this.nazov;
     }
@@ -101,5 +99,26 @@ public abstract class Vozidlo implements  IPredmet {
     @Override
     public void draw(SpriteBatch batch) {
 
+    }
+
+    @Override
+    public boolean jeVRuksaku(boolean trueFalse) {
+        return false;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

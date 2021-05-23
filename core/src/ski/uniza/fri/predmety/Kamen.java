@@ -1,8 +1,13 @@
 package ski.uniza.fri.predmety;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Kamen extends Predmet {
+
+    private String nazov;
+    private Sprite kamiencokyy;
 
     /**
      * (Kamen) Konštruktor pre triedu Kamen, kde sa inicializujú zdenene parametre na vykreslenie pozície.
@@ -11,8 +16,10 @@ public class Kamen extends Predmet {
      * @param width
      * @param height
      */
-    public Kamen(int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public Kamen(Sprite texturka, int x, int y, int width, int height, String nazov) {
+        super(x, y, 40, 40);
+        this.kamiencokyy = texturka;
+        this.nazov = nazov;
     }
 
     //---------------------------------
@@ -51,6 +58,11 @@ public class Kamen extends Predmet {
     @Override
     public void draw(SpriteBatch batch) {
         super.draw(batch);
+    }
+
+    @Override
+    public boolean jeVRuksaku(boolean trueFalse) {
+        return super.jeVRuksaku(trueFalse);
     }
 
     @Override

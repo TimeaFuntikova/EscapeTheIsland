@@ -103,12 +103,6 @@ public class Lokalita implements IMapa {
      * následne dali vykresliť.
      * @param predmet
      */
-    @Override
-    public void vlozPredmetDoLokality(IPredmet predmet) {
-        if (predmet != null) {
-            this.getPredmetyVLokalite().put(predmet.dajNazov(), predmet);
-        }
-    }
 
     /**
      * (Lokalita) Vracia noazov lokality v stringovej reprezentacii.
@@ -119,21 +113,12 @@ public class Lokalita implements IMapa {
         return this.nazovLokality;
     }
 
-    @Override
-    public ArrayList<String> dajPredmetyVLokalite() {
-        ArrayList<String> predmetyVLokalite = new ArrayList<>();
-        for (String s : getPredmetyVLokalite().keySet()) {
-           predmetyVLokalite.add(s);
-            return predmetyVLokalite;
-        } return null;
-    }
-
     /**
      * (Lokalita) Vracia lokalitu hraca
      * @return
      */
     @Override
-    public Lokalita dajLokalituHraca() {
+    public Lokalita dajLokalituPostavy() {
         return this.generatorLokalit.getAktualnaLokalita();
     }
 

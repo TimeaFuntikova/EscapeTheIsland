@@ -3,9 +3,7 @@ package ski.uniza.fri.mapa;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ski.uniza.fri.hra.Postava;
-import ski.uniza.fri.predmety.Drevo;
-import ski.uniza.fri.predmety.IPredmet;
-import ski.uniza.fri.predmety.Kokos;
+import ski.uniza.fri.predmety.*;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 
 import java.util.HashMap;
@@ -34,7 +32,8 @@ public class GeneratorPredmetov {
     private Drevo drevoCesta2;
     private Drevo patyk3;
     private Drevo drevoLietadlo;
-
+    private Kamen kamen1;
+    private Lod lod;
 
 
     public boolean isJeVRuksaku() {
@@ -60,9 +59,7 @@ public class GeneratorPredmetov {
     /**
      * (GeneratorPredmetov) Bezaparametrický konštruktor triedy GeneratorPredmetov.
      */
-    public GeneratorPredmetov() {
-    }
-
+    public GeneratorPredmetov() {}
 
     public HashMap<String, IPredmet> getPredmetyNaVykreslenie() {
         return predmetyNaVykreslenie;
@@ -72,8 +69,7 @@ public class GeneratorPredmetov {
      * (GeneratorLokalit) Vlozi do lokalit na pozicie predmety, s ktorými moze hrac iteragovat.
      * Zároveň pridá do zoznamu predmetov tie, ktore čakaju na vykreslenie.
      */
-    public void naplnLokality(VykreslovacPredmetov vykreslovacPredmetov) {
-        this.vykreslovac = vykreslovacPredmetov;
+    public void naplnLokality() {
         //naplnenie lokalit predmetmmi v nich
 
         this.nastavovacPredmetov();
@@ -105,6 +101,8 @@ public class GeneratorPredmetov {
         this.drevoCesta2 = new Drevo(vykreslovac.getDrevoTexture(), 650, 300, 10, 10, "DrevoCesta2");
         this.patyk3 = new Drevo(vykreslovac.getPatykTexture(), 520, 420, 10, 10, "Patyk3");
         this.drevoLietadlo = new Drevo(vykreslovac.getDrevoTexture(), 450, 80, 10, 10, "DrevoLietadlo");
+        this.kamen1 = new Kamen(vykreslovac.getKamenTexture(), 350, 80, 10, 10, "kamen");
+        this.lod = new Lod(vykreslovac.getLodTexture(), 250, 100, 10,10, "Lodka");
     }
 
     private void mazacPredmetov() { //vymaže zoznam predmetov na vykreslovanie
@@ -113,8 +111,7 @@ public class GeneratorPredmetov {
             if (predmet.daSaPouzit()) {
                 predmet.daSaPouzit(false);
             }
-        }  // toto niečo robiiii
-
+        }
         predmetyNaVykreslenie.clear();
     }
 
@@ -124,6 +121,9 @@ public class GeneratorPredmetov {
             this.predmetyNaVykreslenie.put("KokosPlazovy1", this.kokosPlazovy1);
             this.predmetyNaVykreslenie.put("KokosPlazovy2", this.kokosPlazovy2);
             this.predmetyNaVykreslenie.put("KokosPlazovy3", this.kokosPlazovy3);
+            if(this.postava.mozemPostavitLod()) {
+                this.predmetyNaVykreslenie.put("lod", this.lod);
+            }
         } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getLes()) {
             mazacPredmetov();
             this.predmetyNaVykreslenie.put("DrevoLesne1", this.drevoLesne1);
@@ -141,6 +141,7 @@ public class GeneratorPredmetov {
         } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getLietadlo()) {
             mazacPredmetov();
             this.predmetyNaVykreslenie.put("DrevoLietadlo", this.drevoLietadlo);
+            this.predmetyNaVykreslenie.put("kamen", this.kamen1);
         }
     }
 
@@ -179,9 +180,9 @@ public class GeneratorPredmetov {
         for (int i = 0; i < this.predmetyNaVykreslenie.size(); i++) {
             if (this.predmetyNaVykreslenie != null) {
                 for (IPredmet value : predmetyNaVykreslenie.values()) {
-                    if (!value.nastalaKolizia() && value.daSaPouzit()) {
+                    if (!jeVRuksaku) {
                         value.draw(batch);
-                    } else{
+                    } else {
                         continue;
                     }
                 }

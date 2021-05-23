@@ -49,10 +49,6 @@ public abstract class Potraviny implements  IPredmet {
         this.height = height;
     }
 
-    public int getEnergy() {
-        return energy;
-    }
-
     /**
      * (Potraviny)
      * @param x
@@ -91,9 +87,7 @@ public abstract class Potraviny implements  IPredmet {
     }
 
     @Override
-    public void vypisStavPredmetu() {
-
-    }
+    public void vypisStavPredmetu() {}
 
     @Override
     public void draw(SpriteBatch batch) {

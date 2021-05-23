@@ -60,9 +60,7 @@ public abstract class Jedlo extends Potraviny {
     }
 
     @Override
-    public void nastalaKolizia(boolean nastalaKolizia) {
-
-    }
+    public void nastalaKolizia(boolean nastalaKolizia) {}
 
     @Override
     public void vypisStavPredmetu() {
@@ -72,5 +70,10 @@ public abstract class Jedlo extends Potraviny {
     @Override
     public void draw(SpriteBatch batch) {
         super.draw(batch);
+    }
+
+    @Override
+    public boolean jeVRuksaku(boolean trueFalse) {
+        return true;
     }
 }

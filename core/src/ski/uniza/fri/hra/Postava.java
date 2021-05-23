@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ski.uniza.fri.mapa.Lokalita;
 import ski.uniza.fri.predmety.IPredmet;
-import ski.uniza.fri.predmety.Potraviny;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 
 import java.util.HashMap;
@@ -63,7 +62,7 @@ public class Postava {
     //------------------------------
 
     public Lokalita getAktualnaLokalita() {
-        return this.lokalita.dajLokalituHraca();
+        return this.lokalita.dajLokalituPostavy();
     }
 
     public int getY() {
@@ -153,31 +152,15 @@ public class Postava {
         return s;
     }
 
-    //nedorobené!
-
-
-   /* public void zjedzPredmet(IPredmet predmet) {
-        if (predmet instanceof Potraviny) {
-            predmet = this.lokalita.vezmiPredmet();
-            this.energy += ((Potraviny) predmet).getEnergy();
-        } else {
-            System.out.println("čosi s predmetom je zle. Bud sa neda zjest alebo nie je instanciou triedy potraviny a nevie dat energiu");
-        }
-    }
-    public void vyberZRuksaku(IPredmet predmet) {
-        this.ruksak.vyberZRuksaku(predmet);
-    }
-
- */
-
     /**
      * (Postava) Metódy na akciu postavy
      */
     //toto nejako graficky začleniť do priebehu hry--- pri prechode cez lokality
     public void odpocitavajEnergy() {
+        this.energy = Integer.MAX_VALUE;
         this.energy -= 5;
         if (this.energy != 0) {           // ||
-            if (this.energy > 10 && this.energy < 20) {
+            if (this.energy > 100000 && this.energy < 2000) {
                 System.out.println("Mal by si sa najesť.");
             } else if (this.energy <= 10) {
                 System.out.println("Hladuješ.");
@@ -224,6 +207,9 @@ public class Postava {
 
     }
 
+    public boolean mozemPostavitLod () {
+        return this.ruksak.postavitLod();
+    }
 
     //skladanie lode
 }

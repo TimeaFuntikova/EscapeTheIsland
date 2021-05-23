@@ -76,4 +76,9 @@ public class Drevo extends Predmet {
         System.out.println("(Drevo) Nakreslil som sa.");
 
     }
+
+    @Override
+    public boolean jeVRuksaku(boolean trueFalse) {
+        return super.jeVRuksaku(trueFalse);
+    }
 }

@@ -24,4 +24,6 @@ public interface IPredmet {
     void vypisStavPredmetu(); //napriklad pri opotrebení, alebo nakoľko bude jedlo "zhnité"...
 
     void draw(SpriteBatch batch);
+
+    boolean jeVRuksaku(boolean trueFalse);
 }

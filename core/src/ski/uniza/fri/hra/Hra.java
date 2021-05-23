@@ -67,7 +67,7 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         this.postava.dajPostaveRuksak();
         this.ovladanie = new Ovladanie(this.postava, this.batch, this.vykreslovacPredmetov, this.generatorLokalit, this.vykreslovacPozadiLokalit);
 
-        this.generatorPredmetov.naplnLokality(this.vykreslovacPredmetov); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia. // iba ta aktualna
+        this.generatorPredmetov.naplnLokality(); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia. // iba ta aktualna
         this.postava.aktualizujOvladanie(this.ovladanie);
         this.hlavneMenu = new HlavneMenu(this); // --- po kliknutí na ok by sa okno mohlo minimalizoivať.
 

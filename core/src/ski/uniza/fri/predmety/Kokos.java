@@ -80,4 +80,10 @@ public class Kokos extends Jedlo {
         batch.draw(this.kokosTexture, (float)this.getX(), (float)this.getY(), (float)this.getWidth(), (float)this.getHeight());
         System.out.println("(Kokos) Nakreslil som sa.");
     }
+
+    @Override
+    public boolean jeVRuksaku(boolean trueFalse) {
+        return super.jeVRuksaku(trueFalse);
+    }
+
 }

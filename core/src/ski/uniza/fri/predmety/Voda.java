@@ -75,5 +75,10 @@ public class Voda extends Potraviny {
         super.draw(batch);
     }
 
+    @Override
+    public boolean jeVRuksaku(boolean trueFalse) {
+        return false;
+    }
+
 
 }

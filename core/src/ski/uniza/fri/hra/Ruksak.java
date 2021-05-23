@@ -1,6 +1,8 @@
 package ski.uniza.fri.hra;
 
+import ski.uniza.fri.predmety.Drevo;
 import ski.uniza.fri.predmety.IPredmet;
+import ski.uniza.fri.predmety.Kokos;
 
 import java.util.HashMap;
 
@@ -47,6 +49,7 @@ public class Ruksak {
             if (predmet != null) {
                 this.predmetyVRuksaku.put(predmet.dajNazov(), predmet);
                 aktualnyPocetPredmetovVRuksaku++;
+                predmet.jeVRuksaku(true);
                 System.out.println("------som pridal do ruksakuuu-------");
             } else if (jePlny()) {
                 System.out.println("Ruksak je plny. Nepodarilo sa pridať predmet.");
@@ -57,20 +60,6 @@ public class Ruksak {
             System.out.println("Tento predmet v danej lokalite neexistuje. ");
         }
     }
-
-/*
-    //ošetriť + vykreslenie
-    public IPredmet vyberZRuksaku(IPredmet predmet) {
-        for (IPredmet iPredmet : this.predmety.values()) {
-            if (predmet != null) {
-                this.predmety.remove(predmet);
-                this.postava.getAktualnaLokalita().vlozPredmetDoLokality(predmet);
-                return iPredmet;
-            }
-        }
-        return null;
-    }
- */
 
     public HashMap<String, IPredmet> dajZoznamPredmetovVRuksaku() {
         return this.predmetyVRuksaku;
@@ -84,5 +73,10 @@ public class Ruksak {
         }
         System.out.println("Je plný.");
         return true;
+    }
+
+    public boolean postavitLod() {
+        return dajZoznamPredmetovVRuksaku().values() instanceof Drevo; // hmmm
+
     }
 }

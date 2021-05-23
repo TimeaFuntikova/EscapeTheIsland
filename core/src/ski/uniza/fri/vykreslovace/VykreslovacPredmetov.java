@@ -62,6 +62,15 @@ public class VykreslovacPredmetov extends ApplicationAdapter {
         return new Sprite (new Sprite(this.texture = new Texture("patyk.png")));
     }
 
+    public Sprite getKamenTexture() {
+        return new Sprite (new Sprite(this.texture = new Texture("kamen.png")));
+    }
+
+    public Sprite getLodTexture() {
+        return new Sprite (new Sprite(this.texture = new Texture("lod.png")));
+    }
+
+
 
     public void dispose() {
         this.texture.dispose();
