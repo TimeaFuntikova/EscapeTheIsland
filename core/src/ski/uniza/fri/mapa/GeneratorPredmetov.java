@@ -19,7 +19,6 @@ public class GeneratorPredmetov {
     // Atribúty pre triedu GeneratorPredmetov
     //----------------------------------------
 
-
     private Postava postava;
     private HashMap<String, IPredmet> predmetyNaVykreslenie = new HashMap<>(); // na zaciatku v ňom nič nie je.
     private VykreslovacPredmetov vykreslovac;
@@ -37,6 +36,7 @@ public class GeneratorPredmetov {
     private Drevo patyk3;
     private Drevo drevoLietadlo;
     private Kamen kamen1;
+    private Kamen kamen2;
     private Lod lod;
 
     /**
@@ -95,6 +95,8 @@ public class GeneratorPredmetov {
         this.generatorLokalit.getCesta().naplnMiestnost(this.patyk3);
         this.generatorLokalit.getUtes().naplnMiestnost(this.drevoUtes);
         this.generatorLokalit.getLietadlo().naplnMiestnost(this.kamen1);
+        this.generatorLokalit.getLietadlo().naplnMiestnost(this.kamen2);
+
     }
 
     /**
@@ -115,6 +117,8 @@ public class GeneratorPredmetov {
         this.patyk3 = new Drevo(vykreslovac.getPatykTexture(), 520, 420, 10, 10, "Patyk3");
         this.drevoLietadlo = new Drevo(vykreslovac.getDrevoTexture(), 450, 80, 10, 10, "DrevoLietadlo");
         this.kamen1 = new Kamen(vykreslovac.getKamenTexture(), 350, 80, 10, 10, "kamen");
+        this.kamen2 = new Kamen(vykreslovac.getKamenTexture(), 380, 85, 10, 10, "kamen2");
+
     }
 
     /**
@@ -174,6 +178,7 @@ public class GeneratorPredmetov {
                 mazacPredmetov();
                 this.predmetyNaVykreslenie.put("DrevoLietadlo", this.drevoLietadlo);
                 this.predmetyNaVykreslenie.put("kamen", this.kamen1);
+                this.predmetyNaVykreslenie.put("kamen2", this.kamen2);
             }
         }
     }

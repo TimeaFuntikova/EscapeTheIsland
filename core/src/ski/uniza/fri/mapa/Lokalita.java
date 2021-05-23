@@ -53,7 +53,6 @@ public class Lokalita implements IMapa {
      * @return Hashmap
      */
     public HashMap<String, IPredmet> getPredmetyVLokalite() {
-       // this.predmetyVLokalite = this.generatorLokalit.dajPredmetyNaVykreslenie();
         return predmetyVLokalite;
     }
 

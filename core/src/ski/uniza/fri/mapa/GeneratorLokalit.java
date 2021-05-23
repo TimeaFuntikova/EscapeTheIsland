@@ -37,13 +37,14 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
     private Lokalita secret;
 
     /**
-     * (GeneratorLokalit) Bezparametricky konstruktor triedy GeneratorLokalit.
+     * (GeneratorLokalit) Konstruktor triedy GeneratorLokalit.
      */
     public GeneratorLokalit(GeneratorPredmetov generatorPredmetov) {
         this.generatorPredmetov = generatorPredmetov;
     }
 
     //gettre na lokality
+
     public Lokalita getPlaz() {
         return this.plaz;
     }
@@ -175,6 +176,9 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
             } return null;
     }
 
+    /**
+     * (GeneratorLokalit) Posunuta metoda z triedy generatorPredmetov.
+     */
     public void naplnovacPosunuty() {
         this.generatorPredmetov.naplnovac();
         this.generatorPredmetov.odstranPredmet();

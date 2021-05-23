@@ -1,5 +1,4 @@
 package ski.uniza.fri.hra;
-
 import ski.uniza.fri.predmety.IPredmet;
 import ski.uniza.fri.predmety.Kokos;
 import java.util.HashMap;
@@ -32,8 +31,8 @@ public class Ruksak {
     }
 
     /**
-     * (Ruksak) Pridáva do virtuálneho ruksaku predmety. Kontroluje, či sa vôbec nejaký predmet pridáva a áno, tak skontoroluje, či sa dá použiť.
-     * ak sa presiahne kapacita ruksaku, predmet sa nepridá.
+     * (Ruksak) Pridáva do virtuálneho ruksaku predmety. Kontroluje, či sa vôbec nejaký predmet pridáva a áno, tak skontoroluje, o aku inštanciu ide.
+     * Ak je to kokos, pridá energiu, ak drevo, pridá skóre.
      *
      * @param predmet
      */
@@ -48,7 +47,9 @@ public class Ruksak {
                 this.predmetyVRuksaku.put(predmet.dajNazov(), predmet);
                 aktualnyPocetPredmetovVRuksaku++;
                 predmet.jeVRuksaku(true);
-                this.postava.setSkore(10);
+                if(!(predmet instanceof Kokos)) {
+                    this.postava.setSkore(10);
+                }
                 if(predmet instanceof Kokos) {
                     this.postava.setEnergy(10);
                 }
@@ -67,6 +68,10 @@ public class Ruksak {
         return this.predmetyVRuksaku;
     }
 
+    /**
+     *(Ruksak) Metoda na zistovnie stavu ruksaku.
+     * @return
+     */
     public boolean jePlny() {
         if (this.aktualnyPocetPredmetovVRuksaku < KAPACITA) {
             this.aktualnyPocetPredmetovVRuksaku++;
@@ -77,8 +82,12 @@ public class Ruksak {
         return true;
     }
 
+    /**
+     * (Ruksak) Ak sa dosiahne potrebne skore, vykresli sa lod.
+     * @return
+     */
     public boolean postavitLod() {
-        if (this.postava.getSkore() >= 100 && this.postava.getSkore() < 110) {
+        if (this.postava.getSkore() >= 50 && this.postava.getSkore() < 60) {
             System.out.println("lod bola Vytvorenaaaa----------------------------------");
             this.postava.setSkore(10);
             return true;

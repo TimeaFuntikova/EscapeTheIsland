@@ -13,7 +13,7 @@ public class Ruksacik {
     public Ruksacik() {
         this.jFrame = new JFrame("Zoznam predmetov v ruksaciku");
         this.jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.jFrame.add(this.panel); //pridávam panel, ktorý nikdy neinicializujem ale nevadi??! asi vadi lebo to takto nefunguje
+        this.jFrame.add(this.panel); //pridávam panel, ktorý nikdy neinicializujem
         this.jFrame.pack(); //window sa spraví do normálne požadovanej velkosti a komponenty sa tam zmestia
 
         this.jFrame.setResizable(true);
