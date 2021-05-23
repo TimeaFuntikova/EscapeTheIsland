@@ -55,7 +55,8 @@ public class Kamen extends Predmet {
 
     @Override
     public void draw(SpriteBatch batch) {
-        super.draw(batch);
+        batch.draw(this.kamiencokyy, (float)this.getX(), (float)this.getY(), (float)this.getWidth(), (float)this.getHeight());
+        System.out.println("(Kamen) Nakreslil som sa.");
     }
 
     @Override

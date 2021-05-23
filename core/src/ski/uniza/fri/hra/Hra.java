@@ -50,13 +50,13 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         this.generatorPredmetov = new GeneratorPredmetov();
         this.generatorLokalit = new GeneratorLokalit(this.generatorPredmetov);
         this.ovladanie = new Ovladanie();
+
+        //vytvorenie a inicializácia lokalít:
         this.lokalita = new Lokalita(this.generatorLokalit); //vytvori sa lokalita bez nazvu
         this.generatorLokalit.vytvorLokality(); // vytvori prazdne konkretne lokality
         this.lokalita = new Lokalita(this.generatorLokalit); //vytvori sa lokalita bez nazvu
-        this.generatorLokalit.nastavAktualnuLokalitu(this.generatorLokalit.getLes()); //za aktualnu sa na zaciatok nastavi uvodna lokalita
-
+        this.generatorLokalit.nastavAktualnuLokalitu(this.generatorLokalit.getPlaz()); //za aktualnu sa na zaciatok nastavi uvodna lokalita
         //treba najskor zavolat vytvorenie lokalit inak generator predmetov pracuje s prázdnou inštanciou
-
         this.postava = new Postava(this.lokalita, this.vykreslovacPredmetov, this.batch); //postava bez aktualnej lokality ale schopna sa neskor vykreslit
         this.generatorPredmetov.initGeneratorPredmetov(this.vykreslovacPredmetov, this.generatorLokalit, this.postava); //len init 3 parametrov
 
@@ -64,8 +64,7 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         this.ovladanie = new Ovladanie(this.postava, this.batch, this.vykreslovacPredmetov, this.generatorLokalit, this.vykreslovacPozadiLokalit);
         this.generatorPredmetov.naplnLokality(); //do vytvorených inštancii sa pridajú predmety na pozíciach ale ešte sa nevykreslia.
         this.postava.aktualizujOvladanie(this.ovladanie);
-        //this.hlavneMenu = new HlavneMenu(this);
-
+        this.hlavneMenu = new HlavneMenu(this);
     }
 
     /**
@@ -77,19 +76,29 @@ public class Hra extends ApplicationAdapter { // len tu. kde sa extenduje Applic
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        this.generatorLokalit.vykresliPozadieLokality(this.vykreslovacPozadiLokalit, this.batch);
-        this.postava.vykresliSaNaZaciatok(); // pre postavu
-        this.generatorLokalit.vykresliSa(this.batch, this.vykreslovacPredmetov, this.generatorPredmetov);
-        this.postava.nastalaKolizia();
 
-        //pomoc debug:
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            this.hlavneMenu = new HlavneMenu(this); //ukaze sa menu pri odchode z hry.
-            //System.exit(0);
+        if (this.postava.isHraBezi()) {
+
+            if (this.postava.mozemPostavitLod()) {
+                this.generatorPredmetov.pridajLodDoZoznamu();
+            }
+            this.generatorLokalit.vykresliPozadieLokality(this.vykreslovacPozadiLokalit, this.batch);
+            this.postava.vykresliSaNaZaciatok(); // pre postavu
+            this.generatorPredmetov.getPredmetyNaVykreslenie();
+            this.generatorLokalit.vykresliSa(this.batch, this.vykreslovacPredmetov, this.generatorPredmetov);
+            this.postava.nastalaKolizia();
+
+            //pomoc debug:
+            if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+                this.hlavneMenu = new HlavneMenu(this); //ukaze sa menu pri odchode z hry.
+                //System.exit(0);
+            }
+            this.font.draw(this.batch, this.postava.vypisEnergiu(), 10, Gdx.graphics.getHeight() - 20);
+            this.font.draw(this.batch, "Predmety v ruksaku: " + this.postava.dajPredmetyVRuksaku().keySet(), 10, Gdx.graphics.getHeight() - 40);
+            batch.end();
+        } else {
+            this.create();
         }
-        this.font.draw(this.batch, this.postava.vypisEnergiu(), 10,Gdx.graphics.getHeight() - 20);
-        this.font.draw(this.batch, "Predmety v ruksaku: " + this.postava.dajPredmetyVRuksaku().keySet(), 10, Gdx.graphics.getHeight() - 40);
-        batch.end();
     }
 
     @Override

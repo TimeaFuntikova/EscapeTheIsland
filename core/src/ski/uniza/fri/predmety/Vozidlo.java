@@ -27,11 +27,12 @@ public abstract class Vozidlo implements IPredmet {
      * (Vozidlo) Parametricky konstruktor triedy vozidlo, iniciazuje názov vozidla.
      *
      */
-    public Vozidlo(int x, int y, int width, int height) {
+    public Vozidlo(int x, int y, int width, int height, String nazov) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.nazov = nazov;
         this.vykreslovacPredmetov = new VykreslovacPredmetov();
     }
 
@@ -46,22 +47,22 @@ public abstract class Vozidlo implements IPredmet {
 
     @Override
     public int getX() {
-        return 0;
+        return this.x;
     }
 
     @Override
     public int getY() {
-        return 0;
+        return y;
     }
 
     @Override
     public int getWidth() {
-        return 0;
+        return this.width;
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return this.height;
     }
 
     @Override
@@ -71,7 +72,7 @@ public abstract class Vozidlo implements IPredmet {
 
     @Override
     public boolean sluziNaOdplavenie() {
-        return false;
+        return true;
     }
 
     public void daSaPouzit(boolean daSaPouzit) {

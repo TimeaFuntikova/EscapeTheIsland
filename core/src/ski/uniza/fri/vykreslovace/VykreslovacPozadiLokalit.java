@@ -41,6 +41,8 @@ public class VykreslovacPozadiLokalit extends ApplicationAdapter {
 
     public Sprite getUtesTexture() {return new Sprite (new Sprite(this.texture = new Texture("utes.jpg")));}
 
+    public Sprite getSecretTexture() {return new Sprite (new Sprite(this.texture = new Texture("secret.png")));}
+
     /**
      * (VykreslovacPozadiLokalit) Metóda dispose z Cdx knižnice na prácu s texturou.
      */

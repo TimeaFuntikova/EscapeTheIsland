@@ -15,18 +15,20 @@ public class Lod extends Vozidlo {
     //--------------------
     // Atribúty pre Lod
     //--------------------
+
     private String nazovVozidla;
     private String stav = "Misia bola úspešná.";
-    private Sprite texturaBoat;
+    private Sprite lodTexture;
 
     /**
      * (Lod) Parametrický konstruktor kde sa inicialitujú potrebné parametre na vykreslenie lode.
+     *
      * @param nazov
      */
-    public Lod (Sprite texturkaLode, int x, int y, int width, int height, String nazov) {
-        super(x, y, 35,35);
-        this.texturaBoat = texturkaLode;
-        this.nazovVozidla = nazovVozidla;
+    public Lod(Sprite texturkaLode, int x, int y, int width, int height, String nazov) {
+        super(x, y, 40, 40, "Lodka");
+        this.lodTexture = texturkaLode;
+        this.nazovVozidla = nazov;
     }
 
     //---------------------------------
@@ -41,22 +43,22 @@ public class Lod extends Vozidlo {
 
     @Override
     public int getX() {
-        return 0;
+        return super.getX();
     }
 
     @Override
     public int getY() {
-        return 0;
+        return super.getY();
     }
 
     @Override
     public int getWidth() {
-        return 0;
+        return super.getWidth();
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return super.getHeight();
     }
 
     @Override
@@ -72,11 +74,16 @@ public class Lod extends Vozidlo {
     @Override
     public void daSaPouzit(boolean daSaPouzit) {
     }
+
+    @Override
+    public boolean daSaPouzit() {
+        return super.daSaPouzit();
+    }
+
     @Override
     public boolean nastalaKolizia() {
         return super.nastalaKolizia();
     }
-
 
     @Override
     public void nastalaKolizia(boolean nastalaKolizia) {
@@ -88,11 +95,10 @@ public class Lod extends Vozidlo {
         System.out.println(stav);
     }
 
-
     @Override
     public void draw(SpriteBatch batch) {
-        super.draw(batch);
-        //nakreslit lod a v hre dať použiť aby hra bola ukoncena
+            batch.draw(this.lodTexture, (float)this.getX(), (float)this.getY(), (float)this.getWidth(), (float)this.getHeight());
+            System.out.println("(Lodka) Nakreslila som sa.");
     }
 
     @Override

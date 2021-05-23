@@ -34,6 +34,7 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
     private Lokalita utes;
     private Lokalita more;
     private Lokalita sopka;
+    private Lokalita secret;
 
     /**
      * (GeneratorLokalit) Bezparametricky konstruktor triedy GeneratorLokalit.
@@ -66,6 +67,7 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
     public Lokalita getUtes() {
         return utes;
     }
+    public Lokalita getSecret() {return  secret;}
 
 
     public HashMap<String, Lokalita> getVsetkyLokality() {
@@ -112,6 +114,8 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
         this.vsetkyLokality.put(this.utes.getNazovLokality(), this.utes);
         this.vsetkyLokality.put(this.more.getNazovLokality(), this.more);
         this.vsetkyLokality.put(this.sopka.getNazovLokality(), this.sopka);
+        this.vsetkyLokality.put(this.secret.getNazovLokality(), this.secret);
+
     }
 
     /**
@@ -130,6 +134,7 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
         this.utes = new Lokalita("utes", this);
         this.more = new Lokalita("more", this);
         this.sopka = new Lokalita("sopka", this);
+        this.secret = new Lokalita("secret", this);
     }
 
 
@@ -153,6 +158,8 @@ public class GeneratorLokalit { //nie adapter ale listener? naopak? sem??
             batch.draw(this.vykreslovacPozadiLokalit.getCestaTexture(), 0, 0);
         } else if (this.aktualnaLokalita == this.utes) {
             batch.draw(this.vykreslovacPozadiLokalit.getUtesTexture(), 0, 0);
+        } else if (this.aktualnaLokalita == this.secret) {
+            batch.draw(this.vykreslovacPozadiLokalit.getSecretTexture(), 0, 0);
         }
     }
 

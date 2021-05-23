@@ -5,9 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ski.uniza.fri.mapa.Lokalita;
 import ski.uniza.fri.predmety.IPredmet;
-import ski.uniza.fri.predmety.Kokos;
+import ski.uniza.fri.predmety.Lod;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 
+import javax.swing.*;
 import java.util.HashMap;
 
 /**
@@ -26,15 +27,25 @@ public class Postava {
     //pozicie
     private int x;
     private int y;
+    private int skore;
+
+    public boolean isHraBezi() {
+        return hraBezi;
+    }
+
+    private boolean hraBezi = true;
 
     public int getSkore() {
         return this.skore;
     }
 
-    private int skore;
-
     public void setEnergy(int energy) {
+        if(this.energy > 0) {
         this.energy += energy;
+    } else {
+            JOptionPane.showMessageDialog(null, "Umrel si od vyčerpania. Hra sa resetuje.");
+            hraBezi = false; //resetuje hru.
+        }
     }
     public void setSkore(int skore) {
         this.skore += skore;
@@ -115,7 +126,6 @@ public class Postava {
      * @param x
      * @param y
      */
-
     public void nastavPoziciuHraca(int x, int y) {
         this.x = x;
         this.y = y;
@@ -126,12 +136,10 @@ public class Postava {
      */
     public void pohniSa() { //opravene
         this.ovladanie.nastavOvladaniePostavy();
-        // odpocitavajEnergy(); poriešiť vzhladom na sprite(s)...
     }
 
     /**
      * (Postava) Metóda na inicializovanie textúry postavy.
-     *
      * @param postavaTexture
      */
     private void inicializujTexturu(Sprite postavaTexture) {
@@ -178,7 +186,8 @@ public class Postava {
     }
 
     /**
-     * (Postava) Zavola metodu z Ruksaku na vzatie predmetu do Ruksaku z miestnosti.
+     * (Postava) Metóda kolízie. Nastaví si rozsah, v ktorom vzniká kolízia.
+     * nastaví predmetu vlastnosť, že s ním nastala kolízia a pokiaľ to nie je lodˇ, predmet pridá do ruksaku.
      */
 
     public boolean nastalaKolizia() {
@@ -187,22 +196,32 @@ public class Postava {
                     && (this.y > predmet.getY() - predmet.getHeight() && this.y < predmet.getY() + predmet.getHeight())) {
                 System.out.println("Detekoval som kolíziu.");// ak sa suradnice zhodli, do ruksaka sa prida predmet. pokracuje sa v metode pridaj do ruksaka.
                 predmet.nastalaKolizia(true);
+                if(predmet instanceof Lod) {
+                    JOptionPane.showMessageDialog(null, "Úspešne si sa dostal z ostrova!" );
+                    this.hraBezi = false;
+                }
                 this.pridajDoRuksaka(predmet);
                 return true;
             }
         } return false;
     }
 
+    /**
+     * (Postava) Pridá predmet, na ktorý sa vzťahuje kolízia do ruksaka. Nastaví mu vlastnosť, že sa nedá použiť,
+     * tým pádom sa už v loklaite opätovne nevykreslí.
+     * @param predmet
+     */
     public void pridajDoRuksaka(IPredmet predmet) {
         this.getAktualnaLokalita().vezmiPredmet(predmet); //
         this.ruksak.pridajDoRuksaku(predmet);
         predmet.daSaPouzit(false);
-
     }
 
+    /**
+     * (Postava) Metóda, ktorá sa volá z ruksaka. Posiela sa dalej do hry aby sa vedelo, kedy vznikla kolizia.
+     * @return
+     */
     public boolean mozemPostavitLod () {
         return this.ruksak.postavitLod();
     }
-
-    //skladanie lode
 }

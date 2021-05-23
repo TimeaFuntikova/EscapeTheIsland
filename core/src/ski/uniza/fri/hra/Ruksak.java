@@ -1,9 +1,7 @@
 package ski.uniza.fri.hra;
 
-import ski.uniza.fri.predmety.Drevo;
 import ski.uniza.fri.predmety.IPredmet;
 import ski.uniza.fri.predmety.Kokos;
-
 import java.util.HashMap;
 
 /**
@@ -80,8 +78,10 @@ public class Ruksak {
     }
 
     public boolean postavitLod() {
-        if (this.postava.getSkore() > 50 && dajZoznamPredmetovVRuksaku().containsValue(this.postava.dajPredmetyVRuksaku().get("drevoLesne"))) {
-            return true; // hmmm
+        if (this.postava.getSkore() >= 100 && this.postava.getSkore() < 110) {
+            System.out.println("lod bola Vytvorenaaaa----------------------------------");
+            this.postava.setSkore(10);
+            return true;
         } return false;
     }
 }

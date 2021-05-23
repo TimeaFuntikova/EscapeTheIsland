@@ -17,7 +17,7 @@ public class HlavneMenu extends JFrame implements ActionListener {
     private final int width = 300;
     private final int height = 100;
     private CardLayout layout = new CardLayout();
-    private  JButton play = new JButton("play");
+    private JButton play = new JButton("play");
     private JButton exit = new JButton("exit");
     private JPanel okno = new JPanel();
     private JPanel menu = new JPanel();
@@ -48,7 +48,7 @@ public class HlavneMenu extends JFrame implements ActionListener {
         this.play.addActionListener(this);
         this.exit.addActionListener(this);
         this.okno.add(this.menu, "Menu");
-        add(this.okno);
+        this.add(this.okno);
         layout.show(okno, "Menu");
 
     }

@@ -6,6 +6,7 @@ import ski.uniza.fri.hra.Postava;
 import ski.uniza.fri.predmety.*;
 import ski.uniza.fri.vykreslovace.VykreslovacPredmetov;
 
+import javax.swing.*;
 import java.util.HashMap;
 
 /**
@@ -23,7 +24,6 @@ public class GeneratorPredmetov {
     private HashMap<String, IPredmet> predmetyNaVykreslenie = new HashMap<>(); // na zaciatku v ňom nič nie je.
     private VykreslovacPredmetov vykreslovac;
     private GeneratorLokalit generatorLokalit;
-    private boolean jeVRuksaku = false;
     private Kokos kokosPlazovy1;
     private Kokos kokosPlazovy2;
     private Kokos kokosPlazovy3;
@@ -39,18 +39,8 @@ public class GeneratorPredmetov {
     private Kamen kamen1;
     private Lod lod;
 
-
-    public boolean isJeVRuksaku() {
-        return jeVRuksaku;
-    }
-
-    public void setJeVRuksaku(boolean jeVRuksaku) {
-        this.jeVRuksaku = jeVRuksaku;
-    }
-
     /**
      * (GeneratorPredmetov) Parametricky konstruktor triedy GeneratorPredmetov
-     *
      * @param vykreslovac
      * @param generatorLokalit
      * @param postava
@@ -64,27 +54,38 @@ public class GeneratorPredmetov {
     /**
      * (GeneratorPredmetov) Bezaparametrický konštruktor triedy GeneratorPredmetov.
      */
-    public GeneratorPredmetov() {}
+    public GeneratorPredmetov() {
+    }
 
+    /**
+     * (GenerátorPredmetov)Metóda na vytvorenie loďky. Je samostatne preto, lebo sa zavolá priamo z hry, keď sa zmení vlastnosť,
+     * že loďku už je možné postaviť.
+     */
+    public void pridajLodDoZoznamu() {
+        this.lod = new Lod(vykreslovac.getLodTexture(), 250, 100, 40, 40, "Lodka");
+        this.generatorLokalit.getPlaz().naplnMiestnost(this.lod);
+        JOptionPane.showMessageDialog(null, "Loď sa vytvorila. Utekaj na pláž."); //pride až sem.
 
+    }
 
+    /**
+     * (Generatorpredmetov) zoberie si všetky predmety z triedy Lokalita, ktoré sú práve v aktuálnej lokalite, kde sa nachádza hráč.
+     */
     public HashMap<String, IPredmet> getPredmetyNaVykreslenie() {
         return predmetyNaVykreslenie = this.postava.getAktualnaLokalita().getPredmetyVLokalite();
     }
 
     /**
-     * (GeneratorLokalit) Vlozi do lokalit na pozicie predmety, s ktorými moze hrac iteragovat.
-     * Zároveň pridá do zoznamu predmetov tie, ktore čakaju na vykreslenie.
+     * (Generatorpredmetov) Napľňa zoznam predmetov v treide Lokalita. Na začiatku hry sa nainicialitujú všetky predmety do lokalít,
+     * pri zmenach lokalit sa vola metody naplnovac, ktorá už na základe špecifickej vlastnosti predmety bud vykresli alebo nie.
      */
     public void naplnLokality() {
         //naplnenie lokalit predmetmmi v nich
 
         this.nastavovacPredmetov();
-        //this.naplnovac();
         this.generatorLokalit.getPlaz().naplnMiestnost(this.kokosPlazovy1);
         this.generatorLokalit.getPlaz().naplnMiestnost(this.kokosPlazovy2);
         this.generatorLokalit.getPlaz().naplnMiestnost(this.kokosPlazovy3);
-        this.generatorLokalit.getPlaz().naplnMiestnost(this.lod);
         this.generatorLokalit.getLes().naplnMiestnost(this.drevoLesne1);
         this.generatorLokalit.getLes().naplnMiestnost(this.drevoLesne2);
         this.generatorLokalit.getCesta().naplnMiestnost(this.kokosCesta);
@@ -93,10 +94,12 @@ public class GeneratorPredmetov {
         this.generatorLokalit.getCesta().naplnMiestnost(this.drevoCesta2);
         this.generatorLokalit.getCesta().naplnMiestnost(this.patyk3);
         this.generatorLokalit.getUtes().naplnMiestnost(this.drevoUtes);
-
+        this.generatorLokalit.getLietadlo().naplnMiestnost(this.kamen1);
     }
 
-
+    /**
+     * (GeneratorPredmetov) Nastaví si všetky predmety v hre a pridelí im texúru, pozíciu a jedinečný názov.
+     */
     public void nastavovacPredmetov() {
 
         this.kokosPlazovy1 = new Kokos(vykreslovac.getKokosTexture(), 800, 350, 10, 10, "Kokos1", 10);//vyška a šírka sú pri kokose prednastavene na 50px
@@ -112,13 +115,19 @@ public class GeneratorPredmetov {
         this.patyk3 = new Drevo(vykreslovac.getPatykTexture(), 520, 420, 10, 10, "Patyk3");
         this.drevoLietadlo = new Drevo(vykreslovac.getDrevoTexture(), 450, 80, 10, 10, "DrevoLietadlo");
         this.kamen1 = new Kamen(vykreslovac.getKamenTexture(), 350, 80, 10, 10, "kamen");
-        this.lod = new Lod(vykreslovac.getLodTexture(), 250, 100, 10, 10, "Lodka");
     }
 
+    /**
+     * (GeneratorPredmetov) Vymaže celý zoznam predmetov na vykreslenie, aby sa pri prepínaní lloklaít nezachovávali objekty vykreslené.
+     */
     private void mazacPredmetov() { //vymaže zoznam predmetov na vykreslovanie
         predmetyNaVykreslenie.clear();
     }
 
+    /**
+     * (GeneratorPredmetov) Prejde si kontajner na vykreslenie a pokial v nom nájdepredmet, ktorý sa už nachádza v ruksaku, resp - nedá sa pouziť,
+     * vymaze ho zo zoznamu predmetov na vykreslenie. Zaručí sa tak, že sa po zmene lokality predmet opatovne nyvkresli pokial sa uz nachadza v ruksaku.
+     */
     public void odstranPredmet() {
         IPredmet vymaz = null;
         if (predmetyNaVykreslenie != null) {
@@ -126,64 +135,55 @@ public class GeneratorPredmetov {
                 if (!predmet.daSaPouzit()) {
                     vymaz = predmet;
                 }
-            } if (vymaz != null) {
+            }
+            if (vymaz != null) {
                 this.predmetyNaVykreslenie.remove(vymaz.dajNazov(), vymaz);
             }
         }
     }
 
+    /**
+     * (GeneratorPredmetov) vloží do kontajnera vopred pripravené predmety.
+     */
     public void naplnovac() {
 
         // praca s kontajnerom predmety na vykreslenie
 
         if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getPlaz()) {
             mazacPredmetov();
-            //naplnLokality();
             if (!kokosPlazovy1.daSaPouzit()) {
                 this.predmetyNaVykreslenie.put("KokosPlazovy1", this.kokosPlazovy1);
-                if (kokosPlazovy2.daSaPouzit()) {
-                    this.predmetyNaVykreslenie.put("KokosPlazovy2", this.kokosPlazovy2);
-                }
-                if (kokosPlazovy3.daSaPouzit()) {
-                    this.predmetyNaVykreslenie.put("KokosPlazovy3", this.kokosPlazovy3);
-                }
-
-                if (this.postava.mozemPostavitLod()) {
-                    this.predmetyNaVykreslenie.put("lod", this.lod);
-
-
-                } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getLes()) {
-                    mazacPredmetov();
-                    this.predmetyNaVykreslenie.put("DrevoLesne1", this.drevoLesne1);
-                    this.predmetyNaVykreslenie.put("Patyk1", this.drevoLesne2);
-                } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getCesta()) {
-                    mazacPredmetov();
-                    this.predmetyNaVykreslenie.put("Kokos4", this.kokosCesta);
-                    this.predmetyNaVykreslenie.put("Kokos5", this.kokosCesta2);
-                    this.predmetyNaVykreslenie.put("DrevoCesta1", this.drevoCesta1);
-                    this.predmetyNaVykreslenie.put("DrevoCesta2", this.drevoCesta2);
-                    this.predmetyNaVykreslenie.put("Patyk3", this.patyk3);
-                } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getUtes()) {
-                    mazacPredmetov();
-                    this.predmetyNaVykreslenie.put("Patyk2", this.drevoUtes);
-                } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getLietadlo()) {
-                    mazacPredmetov();
-                    if(drevoLietadlo.daSaPouzit()) {
-                        this.predmetyNaVykreslenie.put("DrevoLietadlo", this.drevoLietadlo);
-                    } if (kamen1.daSaPouzit()) {
-                        this.predmetyNaVykreslenie.put("kamen", this.kamen1);
-                    }
-                }
+                this.predmetyNaVykreslenie.put("KokosPlazovy2", this.kokosPlazovy2);
+                this.predmetyNaVykreslenie.put("KokosPlazovy3", this.kokosPlazovy3);
+                this.predmetyNaVykreslenie.put(this.lod.dajNazov(), this.lod);
+            } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getLes()) {
+                mazacPredmetov();
+                this.predmetyNaVykreslenie.put("DrevoLesne1", this.drevoLesne1);
+                this.predmetyNaVykreslenie.put("Patyk1", this.drevoLesne2);
+            } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getCesta()) {
+                mazacPredmetov();
+                this.predmetyNaVykreslenie.put("Kokos4", this.kokosCesta);
+                this.predmetyNaVykreslenie.put("Kokos5", this.kokosCesta2);
+                this.predmetyNaVykreslenie.put("DrevoCesta1", this.drevoCesta1);
+                this.predmetyNaVykreslenie.put("DrevoCesta2", this.drevoCesta2);
+                this.predmetyNaVykreslenie.put("Patyk3", this.patyk3);
+            } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getUtes()) {
+                mazacPredmetov();
+                this.predmetyNaVykreslenie.put("Patyk2", this.drevoUtes);
+            } else if (this.postava.getAktualnaLokalita() == this.generatorLokalit.getLietadlo()) {
+                mazacPredmetov();
+                this.predmetyNaVykreslenie.put("DrevoLietadlo", this.drevoLietadlo);
+                this.predmetyNaVykreslenie.put("kamen", this.kamen1);
             }
         }
     }
 
     /**
      * (GeneratorPredmetov) Vezme si zoznam predpripravených predmetov na vykreslenie do lokality.
+     * Vymaze zo zoznaamu také predmety, ktore po kolizii s postavou dostali vlastnost "neda sa pouzit"
      *
-     * @return
      */
-    public void inicializujZoznam() { //mal by sa volat ked sa zmeni lokalita
+    private void inicializujZoznam() { //mal by sa volat ked sa zmeni lokalita
         HashMap<String, IPredmet> vymazMa = new HashMap<>();
         for (IPredmet predmet : this.getPredmetyNaVykreslenie().values()) {
             if (predmet.nastalaKolizia() && !predmet.daSaPouzit()) {
@@ -202,10 +202,7 @@ public class GeneratorPredmetov {
 
     /**
      * (GeneratorPredmetov) Prejde si kontajner pridaných predmetov a v cykle ich všetky predmety vykresli.
-     * Pozícia sa určí  na zaklade určenia v triede GeneratorLokalit.
-     * <p>
-     * Rozlišuje, či uz nastala s daným predmetom kolízia, ak nie, v cykle ho vykreslí do aktulanej lokality.
-     * Ak áno, nastaví predmetu atribúť, že sa viac "nedá použiť" čim ma zasitene pevne miesto v ruksaku a v lokalite sa nevykresli.
+     * Pozícia sa určí  na zaklade určenia v triede GeneratorLokalit
      *
      * @param batch
      */

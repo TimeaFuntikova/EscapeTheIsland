@@ -68,6 +68,7 @@ public class Ovladanie implements IOvladanie {
     /**
      * (Ovladanie) Metódy na vykonavanie pohybu. -----------REFAKTORING KOLIZII a HITOV ____________________
      */
+    @Override
     public void nastavOvladaniePostavy() {
         this.nastavPohnutieHore();
         this.nastavPohnutieDole();
@@ -252,7 +253,21 @@ public class Ovladanie implements IOvladanie {
             this.zmenaNaVykreslenieAVypis();
             this.postava.nastavPoziciuHraca(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
 
-        } else {
+        }
+        else if (this.postava.getAktualnaLokalita().dajNazovLokality().equals("vodopad") && this.hitHore) {
+            Lokalita novaZmenena = this.generatorLokalit.getSecret();
+            this.postava.getAktualnaLokalita().zmenLokalitu(novaZmenena);
+            this.zmenaNaVykreslenieAVypis();
+            this.postava.nastavPoziciuHraca(Gdx.graphics.getWidth() / 2, 0);
+
+        }
+        else if (this.postava.getAktualnaLokalita().dajNazovLokality().equals("secret") && this.hitDole) {
+            Lokalita novaZmenena = this.generatorLokalit.getVodopad();
+            this.postava.getAktualnaLokalita().zmenLokalitu(novaZmenena);
+            this.zmenaNaVykreslenieAVypis();
+            this.postava.nastavPoziciuHraca(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight());
+
+        }else {
             if (hitVpravo) {
                 this.postava.getAktualnaLokalita();
                 this.postava.setX(Gdx.graphics.getWidth() - (int) this.vykreslovacPredmetov.getPlayerTexture().getWidth());
